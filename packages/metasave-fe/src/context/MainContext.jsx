@@ -33,7 +33,8 @@ export const MainContextProvider = ({children}) => {
     ])
     React.useEffect(() => {
         if(walletProvider && CFAddress){
-            const fallRef = ref(database, '/fall');
+            console.log('checking firebase rtb for fall')
+            const fallRef = ref(database, 'fall');
             onValue(fallRef, (snapshot) => {
                 if(snapshot.exists()){
                     console.log('fall detected', snapshot.val())

@@ -54,73 +54,9 @@ CHAR_UUID = "12345678-1234-5678-9abc-def012345679"
 
 AUTH_KEY_CHAR_UUID = "12345678-1234-5678-9abc-def012345680"
 
-url = 'http://localhost:5000/api/fall'  
+url = 'http://localhost:5000/api/fall'
 
-stop_ble_reading_event = asyncio.Event()
 
-q = queue.Queue()
-
-async def read_characteristics(address, stop_event):
-    async with BleakClient(address) as client:
-        while not stop_event.is_set():
-            try:
-                char_values = await client.read_gatt_char(CHAR_UUID)
-                auth_values = await client.read_gatt_char(AUTH_KEY_CHAR_UUID)
-                int_value = int(char_values[0])
-                if (int_value == 49):
-                    print("Fallen")
-                    now = datetime.now()
-                    timestamp = str(int(now.timestamp()))
-                    date = now.strftime('%d-%m-%Y')
-
-                    auth_key = auth_values.decode()
-
-                    prediction_data = {
-                        'username': 'ab7zz',
-                        'timestamp': timestamp,
-                        'date': date,
-                        'status': 'fallen'
-                    }
-
-                    fall_ref.set(prediction_data)
-
-                    im0 = cv2.imread("fall.jpg")
-                    _, buffer = cv2.imencode('.jpg', im0)
-                    prediction_data_json = json.dumps(prediction_data)
-
-                    in_memory_file = BytesIO(buffer)
-                    files = {'file': ('current_frame.jpg', in_memory_file, 'image/jpeg')}
-                    data = {
-                        'PREDICTION_DATA': prediction_data_json,
-                        'USERNAME': 'ab7zz',
-                        'PRIV_KEY': auth_key,
-                        'DEVICE_ID': 5678,
-                    }
-
-                    response = requests.post(url, files=files, data=data)
-
-                    if response.status_code == 200:
-                        print("Request sent successfully.")
-                        res = json.loads(response.text)
-                        print(f"Data IPFS ID: {res['dataIPFSid']}")
-                        print(f"Image IPFS ID: {res['imgIPFSid']}")
-                        print(f"Transaction Hash: {res['txHash']}")
-                    else:
-                        print("Error:", response.status_code)
-            except Exception as e:
-                print(f"Error: {e}")
-            await asyncio.sleep(0.1)
-
-def read_accel_data(address):
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
-    loop.run_until_complete(read_characteristics(address, stop_ble_reading_event))
-
-accelerometer_thread = threading.Thread(target=read_accel_data, args=(ADDRESS,))
-# accelerometer_thread.start()
-
-stop_ble_reading_event.set()
-# accelerometer_thread.join()
 
 # Function to send the authentication key using BleakClient
 async def send_authentication_key(address, auth_key):
@@ -167,8 +103,8 @@ async def privkey():
         print(f"Received private key '{priv_key}' from the client.")
         
         # Send the authentication key using the send_authentication_key function
-        # success = await send_authentication_key(ADDRESS, priv_key)
-        success = True
+        success = await send_authentication_key(ADDRESS, priv_key)
+        # success = True
 
         if success:
             if device_type == '1':
@@ -179,7 +115,7 @@ async def privkey():
             elif device_type == '2':
                 return jsonify({
                     'message': f'Successfully sent authentication key to the Arduino Nano 33 BLE Sense',
-                    'deviceId': 5678
+                    'deviceId': SERVICE_UUID
                 }), 200
         else:
             return jsonify({'error': 'Failed to send authentication key to the Arduino Nano BLE Sense Lite'}), 500

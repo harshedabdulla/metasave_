@@ -8,6 +8,7 @@
     "dev-be": "npm --prefix packages/metasave-be run dev",
     "dev-camera": "python packages/model/camera.py",
     "dev-odroid": "python packages/model/odroid.py",
+    "dev-listen": "python packages/model/listenDevice.py",
     "compile-contract": "",
     "deploy-contract": ""
   },
