@@ -1,5 +1,3 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 from bleak import BleakClient, BleakError
 import threading
 import queue
@@ -40,12 +38,6 @@ firebase_admin.initialize_app(cred, {
 })
 
 fall_ref = db.reference('/fall')
-
-# Create a Flask application
-app = Flask(__name__)
-
-# Enable CORS for all routes in the application
-CORS(app)
 
 PRIV_KEY = env_vars["PRIV_KEY"]
 ADDRESS = "E0:F7:BF:E9:2B:7C"
