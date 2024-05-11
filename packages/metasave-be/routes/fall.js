@@ -87,6 +87,9 @@ const verifyFallTrigger = async(req, res, next) => {
         // console.log('Proof verification failed')
         // res.status(400).send('Proof verification failed')
       }
+    }else{
+      console.log('Proof verification failed')
+      res.status(400).send('Proof verification failed')
     }
   }else{
     console.log('Proof verification failed')
