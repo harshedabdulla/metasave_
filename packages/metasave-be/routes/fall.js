@@ -58,7 +58,7 @@ const verifyFallTrigger = async(req, res, next) => {
   
     console.log('tree cid', treeCID)
   
-    if(treeCID != null || treeCID != undefined || treeCID != '' || treeCID != 'undefined' || treeCID != 'null'){
+    if(!(treeCID.length < 5) || treeCID != null || treeCID != undefined || treeCID != '' || treeCID != 'undefined' || treeCID != 'null'){
       
       let proof = ''
   
