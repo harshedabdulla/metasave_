@@ -271,7 +271,8 @@ export const AuthContextProvider = ({children}) => {
       try{
         CFAddress = await AAProvider.getAddress()
       }catch(err){
-        console.log('Error while trying to fetch CFAddress')
+        console.log('Error while trying to fetch CFAddress, fetching again')
+        CFAddress = await AAProvider.getAddress()
       }
 
       console.log(CFAddress, AAProvider)
