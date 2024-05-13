@@ -238,44 +238,50 @@ export const AuthContextProvider = ({children}) => {
   }
 
     const getCFAddress = async(PRIV_KEY) => {
-        const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY
-        const GAS_MANAGER_POLICY_ID = import.meta.env.VITE_GAS_MANAGER_POLICY_ID
-        console.log(ALCHEMY_API_KEY, GAS_MANAGER_POLICY_ID)
-        const ENTRY_POINT_ADDRESS = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
-        const PRIVATE_KEY = `0x${PRIV_KEY}`
-        
-        const chain = sepolia;
+      const ALCHEMY_API_KEY = import.meta.env.VITE_ALCHEMY_API_KEY
+      const GAS_MANAGER_POLICY_ID = import.meta.env.VITE_GAS_MANAGER_POLICY_ID
+      const ENTRY_POINT_ADDRESS = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
+      const PRIVATE_KEY = `0x${PRIV_KEY}`
+      
+      const chain = sepolia;
 
-    const owner = LocalAccountSigner.privateKeyToAccountSigner(PRIVATE_KEY)
+      const owner = LocalAccountSigner.privateKeyToAccountSigner(PRIVATE_KEY)
 
-    const AAProvider = new AlchemyProvider({
-      apiKey: ALCHEMY_API_KEY,
-      chain,
-      entryPointAddress: ENTRY_POINT_ADDRESS,
-    }).connect(
-      (rpcClient) =>
-        new LightSmartContractAccount({
-          rpcClient,
-          owner,
-          chain,
-          entryPointAddress: ENTRY_POINT_ADDRESS,
-          factoryAddress: getDefaultLightAccountFactoryAddress(chain),
-        })
-    )
+      const AAProvider = new AlchemyProvider({
+        apiKey: ALCHEMY_API_KEY,
+        chain,
+        entryPointAddress: ENTRY_POINT_ADDRESS,
+      }).connect(
+        (rpcClient) =>
+          new LightSmartContractAccount({
+            rpcClient,
+            owner,
+            chain,
+            entryPointAddress: ENTRY_POINT_ADDRESS,
+            factoryAddress: getDefaultLightAccountFactoryAddress(chain),
+          })
+      )
 
-    AAProvider.withAlchemyGasManager({
-      policyId: GAS_MANAGER_POLICY_ID,
-    })
+      AAProvider.withAlchemyGasManager({
+        policyId: GAS_MANAGER_POLICY_ID,
+      })
 
-    const CFAddress = await AAProvider.getAddress()
+      let CFAddress = ''
 
-    console.log(CFAddress, AAProvider)
+      try{
+        CFAddress = await AAProvider.getAddress()
+      }catch(err){
+        console.log('Error while trying to fetch CFAddress')
+        window.location.replace('/register')
+      }
 
-    setCFAddress(CFAddress)
-    setAAProvider(AAProvider)
+      console.log(CFAddress, AAProvider)
 
-    return CFAddress
-  }
+      setCFAddress(CFAddress)
+      setAAProvider(AAProvider)
+
+      return CFAddress
+    }
 
   // const getPID = async(web3authProvider) => {
   //     if(web3authProvider){
