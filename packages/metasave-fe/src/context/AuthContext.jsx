@@ -272,7 +272,6 @@ export const AuthContextProvider = ({children}) => {
         CFAddress = await AAProvider.getAddress()
       }catch(err){
         console.log('Error while trying to fetch CFAddress')
-        window.location.replace('/register')
       }
 
       console.log(CFAddress, AAProvider)
