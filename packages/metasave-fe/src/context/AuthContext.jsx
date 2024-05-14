@@ -124,7 +124,8 @@ export const AuthContextProvider = ({children}) => {
           newUser: false
       }
 
-      const privateKey = await walletProvider.getPrivateKey()
+      // const privateKey = await walletProvider.getPrivateKey()
+      const privateKey = '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
       const ZKProof = await walletProvider.getContract(addresses.ZKProof, abi.ZKProof)
 
       let treeCID, treeRoot
@@ -205,7 +206,8 @@ export const AuthContextProvider = ({children}) => {
     console.log('web3authprovider: ', web3authProvider)
     const walletProvider = getWalletProvider(web3authProvider)
     const walletAddress = await walletProvider.getAddress()
-    const priv_key = await walletProvider.getPrivateKey()
+    // const priv_key = await walletProvider.getPrivateKey()
+    const priv_key = '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
     console.log('priv_key', priv_key)
     setWalletProvider(walletProvider)
     setWalletAddress(walletAddress)
@@ -266,13 +268,13 @@ export const AuthContextProvider = ({children}) => {
         policyId: GAS_MANAGER_POLICY_ID,
       })
 
-      let CFAddress = ''
+      let CFAddress = '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550'
 
       try{
-        CFAddress = await AAProvider.getAddress()
+        // CFAddress = await AAProvider.getAddress()
+        CFAddress = '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550'
       }catch(err){
         console.log('Error while trying to fetch CFAddress, fetching again')
-        CFAddress = await AAProvider.getAddress()
       }
 
       console.log(CFAddress, AAProvider)
@@ -305,7 +307,8 @@ export const AuthContextProvider = ({children}) => {
       const web3AuthProvider = web3auth.provider
       const walletProvider = getWalletProvider(web3AuthProvider)
       const walletAddress = await walletProvider.getAddress()
-      const priv_key = await walletProvider.getPrivateKey()
+      // const priv_key = await walletProvider.getPrivateKey()
+      const priv_key = '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
       console.log('priv_key', priv_key)
 
       setPrivKey(priv_key)
