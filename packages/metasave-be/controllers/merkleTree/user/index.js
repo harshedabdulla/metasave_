@@ -22,6 +22,8 @@ const userMerkleTree = async (req, res) => {
             value
         ];
 
+        console.log(values)
+
         if(treeCID == null || treeCID == undefined || treeCID == '' || treeCID == 'undefined' || treeCID == 'null'){
             // const values = [["0x1111111111111111111111111111111111111111", "0x066ac8fc073612bd0ab02b22c917837f97057aec7fdae5f7cc7694e2ba0edd25"]];
             console.log('Initializing new Tree')
@@ -65,7 +67,6 @@ const userMerkleTree = async (req, res) => {
                 if (v[0] === values[0][0]) {
                     present = true
                     proof = tree.getProof(i)
-                    console.log(proof)
                     root = tree.root
                     break
                 }
@@ -100,6 +101,36 @@ const userMerkleTree = async (req, res) => {
                 }
 
                 console.log('Root and IPFS CID set successfully!')
+            }else{
+                console.log('New user detected!')
+                newUser = true
+
+                for (const [i, v] of tree.entries()){
+                    values.push(v)
+                }
+                
+                tree = StandardMerkleTree.of(values, ["address", "bytes32"]);
+
+                treeCID = await insertMT(tree.dump())
+
+                try{
+                    console.log('Granting USER role to new user')
+                    await userOperation(abi.MetaSave, 'grantUserRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)
+                }catch(err){
+                    console.log(`Error while granting USER role to ${CFAddress}`)
+                }
+
+                console.log('USER role granted successfully!')
+
+                try{
+                    console.log('Setting root and IPFS CID')
+                    await userOperation(abi.ZKProof, 'setRootAndIPFS', [tree.root, treeCID, 1], addresses.ZKProof, ADMIN_PRIV_KEY)
+                }catch(err){
+                    console.log(`Error while setting root and IPFS CID`)
+                }
+
+                console.log('Root and IPFS CID set successfully!')
+
             }
         }
 
