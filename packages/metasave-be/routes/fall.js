@@ -58,7 +58,7 @@ const verifyFallTrigger = async(req, res, next) => {
   
     console.log('tree cid', treeCID)
   
-    if(!(treeCID.length < 5) || treeCID != null || treeCID != undefined || treeCID != '' || treeCID != 'undefined' || treeCID != 'null'){
+    if(!(treeCID.length < 5) && treeCID != null && treeCID != undefined && treeCID != '' && treeCID != 'undefined' && treeCID != 'null'){
       
       let proof = ''
   
@@ -77,7 +77,6 @@ const verifyFallTrigger = async(req, res, next) => {
       }
   
       const verify = await contract.verify(proof, CFAddress, k_deviceId, 0)
-      j
       if(verify == true || verify == 'true'){
         console.log('Proof verified!!!!!')
         next()

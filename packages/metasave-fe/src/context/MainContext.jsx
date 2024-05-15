@@ -28,7 +28,6 @@ export const MainContextProvider = ({children}) => {
     const [walletProvider, setWalletProvider] = React.useState()
     const [CFAddress, setCFAddress] = React.useState()
     const [devices, setDevices] = React.useState([
-        { name: 'Fitbit Sense 2', id: '432534:34z:312', date: '12/02/2024' },
         // ...additional devices
     ])
     React.useEffect(() => {
