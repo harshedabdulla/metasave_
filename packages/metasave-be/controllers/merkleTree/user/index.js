@@ -101,36 +101,6 @@ const userMerkleTree = async (req, res) => {
                 }
 
                 console.log('Root and IPFS CID set successfully!')
-            }else{
-                console.log('New user detected!')
-                newUser = true
-
-                for (const [i, v] of tree.entries()){
-                    values.push(v)
-                }
-                
-                tree = StandardMerkleTree.of(values, ["address", "bytes32"]);
-
-                treeCID = await insertMT(tree.dump())
-
-                try{
-                    console.log('Granting USER role to new user')
-                    await userOperation(abi.MetaSave, 'grantUserRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)
-                }catch(err){
-                    console.log(`Error while granting USER role to ${CFAddress}`)
-                }
-
-                console.log('USER role granted successfully!')
-
-                try{
-                    console.log('Setting root and IPFS CID')
-                    await userOperation(abi.ZKProof, 'setRootAndIPFS', [tree.root, treeCID, 1], addresses.ZKProof, ADMIN_PRIV_KEY)
-                }catch(err){
-                    console.log(`Error while setting root and IPFS CID`)
-                }
-
-                console.log('Root and IPFS CID set successfully!')
-
             }
         }
 

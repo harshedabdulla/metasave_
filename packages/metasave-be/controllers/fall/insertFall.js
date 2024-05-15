@@ -17,41 +17,9 @@ const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL
 
 const insertFall = async (req, res) => {
   try {
-    const imagePath = `./uploads/${req.body.USERNAME}/image.jpg`
     const AAProvider = await AA(req.body.PRIV_KEY)
-    
-    let imgIPFSid = ''
-    let dataIPFSid = ''
-
-    // Upload image to IPFS
-    if (fs.existsSync(imagePath)) {
-      const formDataImage = new FormData()
-      formDataImage.append('file', fs.createReadStream(imagePath))
-
-      imgIPFSid = await uploadToIPFS(formDataImage, 'file')
-      console.log('Image IPFS ID:', imgIPFSid)
-    } else {
-      console.log('Image file does not exist:', imagePath)
-    }
-
-    dataIPFSid = await uploadToIPFS(
-      JSON.parse(req.body.PREDICTION_DATA),
-      'json'
-    )
-
-    console.log('Data IPFS ID:', dataIPFSid)
-
-    // Store fall data on blockchain
     const PRIV_KEY = req.body.PRIV_KEY
     const CFAddress = await AAProvider.getAddress()
-    const txHash = await userOperation(
-      abi.MetaSave,
-      'setFallData',
-      [CFAddress, imgIPFSid, dataIPFSid],
-      addresses.MetaSave,
-      PRIV_KEY
-    )
-
     const provider = new ethers.providers.JsonRpcProvider(
       ALCHEMY_API_URL,
     )
@@ -91,6 +59,39 @@ const insertFall = async (req, res) => {
         console.log('Error sending message to', details.data.phone[i])
       }
     }
+    const imagePath = `./uploads/${req.body.USERNAME}/image.jpg`
+    
+    
+    let imgIPFSid = ''
+    let dataIPFSid = ''
+
+    // Upload image to IPFS
+    if (fs.existsSync(imagePath)) {
+      const formDataImage = new FormData()
+      formDataImage.append('file', fs.createReadStream(imagePath))
+
+      imgIPFSid = await uploadToIPFS(formDataImage, 'file')
+      console.log('Image IPFS ID:', imgIPFSid)
+    } else {
+      console.log('Image file does not exist:', imagePath)
+    }
+
+    dataIPFSid = await uploadToIPFS(
+      JSON.parse(req.body.PREDICTION_DATA),
+      'json'
+    )
+
+    console.log('Data IPFS ID:', dataIPFSid)
+
+    // Store fall data on blockchain
+    
+    const txHash = await userOperation(
+      abi.MetaSave,
+      'setFallData',
+      [CFAddress, imgIPFSid, dataIPFSid],
+      addresses.MetaSave,
+      PRIV_KEY
+    )
 
     res.send({
       imgIPFSid,
