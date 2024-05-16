@@ -270,9 +270,9 @@ export const AuthContextProvider = ({children}) => {
       })
 
       let CFAddress = '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f'
-
+      // let CFAddress2 = ''
       try{
-        // CFAddress = await AAProvider.getAddress()
+        // let CFAddress2 = await AAProvider.getAddress()
         CFAddress = '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f'
       }catch(err){
         console.log('Error while trying to fetch CFAddress, fetching again')
@@ -285,14 +285,6 @@ export const AuthContextProvider = ({children}) => {
 
       return CFAddress
     }
-
-  // const getPID = async(web3authProvider) => {
-  //     if(web3authProvider){
-  //         const pKey = await walletProvider.getPrivateKey()
-  //         const res = await identityCreation(pKey);
-  //         setPID(res.did.string())
-  //     }
-  // }
 
   const Logout = async () => {
     if (web3auth) {

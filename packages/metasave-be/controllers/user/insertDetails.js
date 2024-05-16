@@ -31,7 +31,7 @@ const insertDetails = async(req, res) => {
                     'Authorization': `Bearer ${PINATA_API_KEY}`
                 }
             });
-            console.log('Successfully uploaded to IPFS!')
+            console.log('Successfully uploaded to IPFS!', response.data.IpfsHash)
             res.json({CID: response.data.IpfsHash})
         } catch (error) {
             console.log(error);
