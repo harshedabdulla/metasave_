@@ -56,8 +56,6 @@ AUTH_KEY_CHAR_UUID = "12345678-1234-5678-9abc-def012345680"
 
 url = 'http://localhost:5000/api/fall'
 
-
-
 # Function to send the authentication key using BleakClient
 async def send_authentication_key(address, auth_key):
     try:

@@ -6,6 +6,12 @@ import FallPopup from './FallPopup'
 import { Link } from 'react-router-dom'
 import { useMainContext } from '../../context/MainContext'
 
+function formatTime(timestamp) {
+  const [hours, minutes, seconds] = timestamp.split(':');
+  const formattedTime = `${hours}:${minutes}:${seconds}`;
+  return formattedTime;
+}
+
 const Dashboard = () => {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false)
   const [isDataPopupOpen, setIsDataPopupOpen] = useState(false)
@@ -107,7 +113,7 @@ const Dashboard = () => {
               >
                 <div className="flex flex-col mb-3 md:mb-20">
                   <h3 className="text-[#3a3a3a] poppins font-semibold my-2 text-lg md:text-xl">
-                    {fall.time}
+                    {formatTime(fall.timestamp)}
                   </h3>
                   <h3 className="text-[#3a3a3a] poppins font-semibold my-2 text-lg md:text-xl">
                     Severe Fall

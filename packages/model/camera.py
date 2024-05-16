@@ -13,6 +13,8 @@ from io import BytesIO
 from dotenv import dotenv_values
 import threading
 import queue
+import asyncio
+from bleak import BleakClient
 import firebase_admin
 from firebase_admin import credentials, db
 from dotenv import dotenv_values
@@ -46,6 +48,40 @@ firebase_admin.initialize_app(cred, {
 fall_ref = db.reference('/fall')
 
 q = queue.Queue()
+
+address = "E0:F7:BF:E9:2B:7C"
+SERVICE_UUID = "12345678-1234-5678-9abc-def012345678"
+CHAR_UUID = "12345678-1234-5678-9abc-def012345679"
+
+accelerometer_queue = queue.Queue()
+stop_ble_reading_event = asyncio.Event()
+
+async def read_characteristics(address, stop_event):
+    async with BleakClient(address) as client:
+        fall_detected = False
+        while not stop_event.is_set():
+            try:
+                char_values = await client.read_gatt_char(CHAR_UUID)
+                int_value = int(char_values[0])
+                if (int_value == 49):
+                    print("Fallen")
+                    fall_detected = True
+                    accelerometer_queue.put(fall_detected)
+                elif fall_detected and int_value != 49:
+                    fall_detected = False
+                    accelerometer_queue.put(fall_detected)
+                # accelerometer_queue.put(fall_detected)
+            except Exception as e:
+                print(f"Error: {e}")
+            await asyncio.sleep(0.1)
+
+def read_accel_data(address):
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    loop.run_until_complete(read_characteristics(address, stop_ble_reading_event))
+
+accelerometer_thread = threading.Thread(target=read_accel_data, args=(address,))
+accelerometer_thread.start()
 
 env_vars = dotenv_values()
 
@@ -84,8 +120,10 @@ def post_request():
         if item is None:
             break
 
-        if last_sent_time is None or now - last_sent_time >= timedelta(seconds=30):
+        if last_sent_time is None or (now - last_sent_time >= timedelta(seconds=30)):
             prediction_data, buffer = item
+            accelerometer_data = accelerometer_queue.get()
+            prediction_data['accelerometer_data'] = accelerometer_data
             prediction_data_json = json.dumps(prediction_data)
 
             in_memory_file = BytesIO(buffer)
@@ -118,6 +156,8 @@ while(cap.isOpened):
     
     frame_count += 1  
     ret, frame = cap.read()
+    if not ret:
+        break
     if ret:
         
         orig_image = frame
@@ -128,7 +168,7 @@ while(cap.isOpened):
         image = transforms.ToTensor()(image)
         image = torch.tensor(np.array([image.numpy()]))
         
-        image = image.half().to(device)  
+        image = image.half().to(device)
         
         with torch.no_grad():
             output, _ = model(image)
@@ -157,7 +197,7 @@ while(cap.isOpened):
               fallen = True
               if fallen and not sent:
                 now = datetime.now()
-                timestamp = str(int(now.timestamp()))
+                timestamp = now.strftime('%H:%M:%S')
                 date = now.strftime('%d-%m-%Y')
                 _, buffer = cv2.imencode('.jpg', im0)
                 prediction_data = {
@@ -183,8 +223,11 @@ while(cap.isOpened):
     else:
         break
 
-q.put(None)
-request_thread.join()
-
 cap.release()
 cv2.destroyAllWindows()
+
+stop_ble_reading_event.set()
+accelerometer_thread.join()
+
+q.put(None)
+request_thread.join()
