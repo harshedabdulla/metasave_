@@ -51,7 +51,7 @@ const insertFall = async (req, res) => {
 
     const details = await axios.get(`${PINATA_BASE_URL}/ipfs/${ipfsid}`)
     console.log('details:', details.data)
-    console.log('phones:', details.phone)
+    console.log('phones:', details.data.phone)
     const falldetails = JSON.parse(req.body.PREDICTION_DATA)
 
     for (let i = 0; i < details.data.contacts.length; i++) {
@@ -59,7 +59,7 @@ const insertFall = async (req, res) => {
         .replace(' ', '')
         .replace('+', '')
       const res = sendMessage(
-        imgIPFSid,
+        `${PINATA_BASE_URL}/ipfs/${imgIPFSid}`,
         details.data.name,
         ph,
         falldetails.timestamp,

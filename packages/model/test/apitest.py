@@ -37,7 +37,7 @@ PRIV_KEY = env_vars["PRIV_KEY"]
 url = 'http://localhost:5000/api/fall'
 
 prediction_data = { 
-    'username': 'alosh',
+    'username': 'ab7zz',
     'timestamp': '12:40pm',
     'date': '16-05-2024',
     'status': 'fallen'
