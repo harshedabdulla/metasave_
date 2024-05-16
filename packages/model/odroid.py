@@ -113,7 +113,7 @@ async def privkey():
             elif device_type == '2':
                 return jsonify({
                     'message': f'Successfully sent authentication key to the Arduino Nano 33 BLE Sense',
-                    'deviceId': SERVICE_UUID
+                    'deviceId': 5678
                 }), 200
         else:
             return jsonify({'error': 'Failed to send authentication key to the Arduino Nano BLE Sense Lite'}), 500

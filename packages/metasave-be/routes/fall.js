@@ -77,6 +77,10 @@ const verifyFallTrigger = async(req, res, next) => {
       }
   
       const verify = await contract.verify(proof, CFAddress, k_deviceId, 0)
+<<<<<<< HEAD
+=======
+      
+>>>>>>> 90fb45cac49fbd62915ce3065af452df906636be
       if(verify == true || verify == 'true'){
         console.log('Proof verified!!!!!')
         next()

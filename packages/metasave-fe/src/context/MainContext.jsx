@@ -59,17 +59,20 @@ export const MainContextProvider = ({children}) => {
 
     const fetchUserDetails = async (walletProvider, CFAddress) => {
         const MetaSave = await walletProvider.getContract(addresses.MetaSave, abi.MetaSave)
-        console.log('fetchin user details')
+        console.log('fetchin user details for', CFAddress)
+        let IPFSid = 'QmcG553qsFk4cskCxMBukqEJSMv2oVm49kbC3Tc1zCAmz4'
         try{
-            const IPFSid = await MetaSave.getIPFSFileName(CFAddress)
-            console.log(IPFSid)
-
-            //fetch user details from ipfs id and store it in userDetails
+            IPFSid = await MetaSave.getIPFSFileName(CFAddress)
+        }catch(err){
+            console.log('No IPFSid', err)
+        }
+        
+        try{
             const res = await axios.get(`${serverUrl}/user/${IPFSid}`)
             console.log(res.data.data)
             setUserDetails(res.data.data)
         }catch(err){
-            console.log('No user data for this user')
+            console.log('invalid ipfsid', err)
         }
     }
 
@@ -127,7 +130,7 @@ export const MainContextProvider = ({children}) => {
             console.log(uniqueArray);
             setFallDetails(uniqueArray)
         }catch(err){
-            console.log('No fall data for this user')
+            console.log('No fall data for this user', err)
         }
     }
 

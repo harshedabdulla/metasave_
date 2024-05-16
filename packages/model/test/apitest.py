@@ -22,10 +22,10 @@ firebase_vars = {
 
 json_str = json.dumps(firebase_vars, indent=4)
 
-with open("packages/model/test/firebase_credentials.json", "w") as f:
+with open("firebase_credentials.json", "w") as f:
     f.write(json_str)
 
-cred = credentials.Certificate('packages/model/test/firebase_credentials.json')
+cred = credentials.Certificate('firebase_credentials.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': env_vars['DATABASE_URL']
 })
@@ -37,9 +37,9 @@ PRIV_KEY = env_vars["PRIV_KEY"]
 url = 'http://localhost:5000/api/fall'
 
 prediction_data = { 
-    'username': 'ab7zz',
+    'username': 'alosh',
     'timestamp': '12:40pm',
-    'date': '09-05-2024',
+    'date': '16-05-2024',
     'status': 'fallen'
 }
 
@@ -47,7 +47,7 @@ fall_ref.set(prediction_data)
 
 prediction_data_json = json.dumps(prediction_data)
 
-file_name = 'packages/model/test/fall.jpg'
+file_name = 'fall.jpg'
 try:
     with open(file_name, 'rb') as f:
         files = {'file': (file_name, f.read())}

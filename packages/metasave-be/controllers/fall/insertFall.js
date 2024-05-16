@@ -17,8 +17,21 @@ const ALCHEMY_API_URL = process.env.ALCHEMY_API_URL
 
 const insertFall = async (req, res) => {
   try {
-    const imagePath = `./uploads/${req.body.USERNAME}/image.jpg`
     const AAProvider = await AA(req.body.PRIV_KEY)
+    const PRIV_KEY = req.body.PRIV_KEY
+    const CFAddress = await AAProvider.getAddress()
+    const provider = new ethers.providers.JsonRpcProvider(
+      ALCHEMY_API_URL,
+    )
+    const contractAddress = addresses.MetaSave
+    const privateKey = req.body.PRIV_KEY
+    const wallet = new ethers.Wallet(`0x${privateKey}`, provider)
+    const contract = new ethers.Contract(contractAddress, abi.MetaSave, wallet)
+    const ipfsid = await contract.getIPFSFileName(CFAddress)
+    // const fallData = await contract.getFallData(CFAddress)
+
+    const imagePath = `./uploads/${req.body.USERNAME}/image.jpg`
+    
     
     let imgIPFSid = ''
     let dataIPFSid = ''
@@ -34,44 +47,9 @@ const insertFall = async (req, res) => {
       console.log('Image file does not exist:', imagePath)
     }
 
-    dataIPFSid = await uploadToIPFS(
-      JSON.parse(req.body.PREDICTION_DATA),
-      'json'
-    )
-
-    console.log('Data IPFS ID:', dataIPFSid)
-
-    // Store fall data on blockchain
-    const PRIV_KEY = req.body.PRIV_KEY
-    const CFAddress = await AAProvider.getAddress()
-    const txHash = await userOperation(
-      abi.MetaSave,
-      'setFallData',
-      [CFAddress, imgIPFSid, dataIPFSid],
-      addresses.MetaSave,
-      PRIV_KEY
-    )
-
-    const provider = new ethers.providers.JsonRpcProvider(
-      ALCHEMY_API_URL,
-    )
-    const contractAddress = addresses.MetaSave
-    const privateKey = req.body.PRIV_KEY
-    const wallet = new ethers.Wallet(`0x${privateKey}`, provider)
-    const contract = new ethers.Contract(contractAddress, abi.MetaSave, wallet)
-    const ipfsid = await contract.getIPFSFileName(CFAddress)
-    const fallData = await contract.getFallData(CFAddress)
-
     console.log('ipfs id:', ipfsid)
-    console.log('fallData:', fallData)
-    console.log('falllength:', fallData.length)
-    console.log('lastfallData:', fallData[fallData.length - 1])
-    const lastFallData = fallData[fallData.length - 1]
-    const lastimgIPFSid = lastFallData[0]
-    console.log('lastimgIPFSid:', lastimgIPFSid)
 
     const details = await axios.get(`${PINATA_BASE_URL}/ipfs/${ipfsid}`)
-    const img = `${PINATA_BASE_URL}/ipfs/${lastimgIPFSid}`
     console.log('details:', details.data)
     console.log('phones:', details.phone)
     const falldetails = JSON.parse(req.body.PREDICTION_DATA)
@@ -81,7 +59,7 @@ const insertFall = async (req, res) => {
         .replace(' ', '')
         .replace('+', '')
       const res = sendMessage(
-        img,
+        imgIPFSid,
         details.data.name,
         ph,
         falldetails.timestamp,
@@ -91,6 +69,24 @@ const insertFall = async (req, res) => {
         console.log('Error sending message to', details.data.phone[i])
       }
     }
+    
+
+    dataIPFSid = await uploadToIPFS(
+      JSON.parse(req.body.PREDICTION_DATA),
+      'json'
+    )
+
+    console.log('Data IPFS ID:', dataIPFSid)
+
+    // Store fall data on blockchain
+    
+    const txHash = await userOperation(
+      abi.MetaSave,
+      'setFallData',
+      [CFAddress, imgIPFSid, dataIPFSid],
+      addresses.MetaSave,
+      PRIV_KEY
+    )
 
     res.send({
       imgIPFSid,

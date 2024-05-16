@@ -20,6 +20,8 @@ async function userOperation(abi, functionName, args, address, PRIV_KEY) {
 
     const txHash = await AAProvider.waitForUserOperationTransaction(userOperation.hash);
 
+    console.log('transaction completed...', txHash)
+
     return txHash;
   } catch (error) {
     console.error(`Error in userOperation: ${error}`);
