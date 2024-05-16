@@ -62,11 +62,6 @@ export const MainContextProvider = ({children}) => {
         const MetaSave = await walletProvider.getContract(addresses.MetaSave, abi.MetaSave)
         console.log('fetchin user details for', CFAddress)
         let IPFSid = 'QmcG553qsFk4cskCxMBukqEJSMv2oVm49kbC3Tc1zCAmz4'
-        try{
-            IPFSid = await MetaSave.getIPFSFileName(CFAddress)
-        }catch(err){
-            console.log('No IPFSid', err)
-        }
         
         try{
             const res = await axios.get(`${serverUrl}/user/${IPFSid}`)
@@ -77,46 +72,15 @@ export const MainContextProvider = ({children}) => {
         }
     }
 
-    async function fetchFallData(cid) {
-        try {
-            const res = await axios.get(`${serverUrl}/falldata?dataIPFSid=${cid}`);
-            if(res){
-                console.log(res.data.dataIPFSdata)
-                return res.data.dataIPFSdata
-            }
-        } catch (error) {
-            console.error(error);
-            return null;
-        }
-    }
-
     const fetchFallDetails = async(walletProvider, CFAddress) => {
         console.log('fetch fall details', CFAddress)
         setWalletProvider(walletProvider)
         setCFAddress(CFAddress)
-        const MetaSave = await walletProvider.getContract(addresses.MetaSave, abi.MetaSave)
         try{
-            console.log('fetching fall details')
-            const IPFSobj = await MetaSave.getFallData(CFAddress)
-            console.log('fall details: ', IPFSobj)
-            const result = [];
-            for (let i = 0; i < IPFSobj.length; i++) {
-                const dataIPFS = IPFSobj[i][1]
-                const imgIPFS = IPFSobj[i][0]
-                console.log(dataIPFS, imgIPFS)
-                const data = await fetchFallData(dataIPFS);
-                if (data) {
-                    const jsonMap = {
-                        username: data.username,
-                        timestamp: data.timestamp,
-                        date: data.date,
-                        status: data.status,
-                        imgIPFS
-                    };
-                    result.push(jsonMap);
-                }
-            }
-            console.log(result)
+            const res = await axios.get(`${serverUrl}/falldata`)
+
+            const result = res.data.result
+
             const uniqueObjects = {};
 
             result.forEach(obj => {
