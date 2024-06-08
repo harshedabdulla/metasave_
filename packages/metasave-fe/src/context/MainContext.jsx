@@ -82,17 +82,17 @@ export const MainContextProvider = ({children}) => {
 
             const uniqueObjects = {};
 
-            result.forEach(obj => {
-                const timestamp = obj.timestamp;
-                if (!uniqueObjects[timestamp]) {
-                    uniqueObjects[timestamp] = obj;
-                }
-            });
+            // result.forEach(obj => {
+            //     const timestamp = obj.timestamp;
+            //     if (!uniqueObjects[timestamp]) {
+            //         uniqueObjects[timestamp] = obj;
+            //     }
+            // });
 
-            const uniqueArray = Object.values(uniqueObjects);
+            // const uniqueArray = Object.values(uniqueObjects);
 
-            console.log(uniqueArray);
-            setFallDetails(uniqueArray)
+            // console.log(uniqueArray);
+            setFallDetails(result)
         }catch(err){
             console.log('No fall data for this user', err)
         }
