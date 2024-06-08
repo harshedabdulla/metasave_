@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import LeftSide from '../components/Register/LeftSide';
-import RightSide1 from '../components/Register/RightSide1';
-import RightSide2 from '../components/Register/RightSide2';
-import RightSide3 from '../components/Register/RightSide3';
+import LeftSide from '../../components/Register/LeftSide';
+import RightSide1 from '../../components/Register/RightSide1';
+import RightSide2 from '../../components/Register/RightSide2';
+import RightSide3 from '../../components/Register/RightSide3';
 
 const SignupContext = React.createContext();
 

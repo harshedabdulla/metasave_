@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useSignupContext } from '../../pages/Signup';
+import { useSignupContext } from '../../pages/user/Signup';
 
 const RightSide2 = ({ onNext, onPrev }) => {
   const {contacts, addContact, handleContactChange, name, setName, gender, setGender, age, setAge, address, setAddress, phone, setPhone, setError, error} = useSignupContext()

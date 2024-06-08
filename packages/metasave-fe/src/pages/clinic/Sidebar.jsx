@@ -1,16 +1,11 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link, useParams } from 'react-router-dom'
 import Logo from '../../assets/logo.svg'
+import { useClinicAuthContext } from '../../context/ClinicAuthContext'
+
 const Sidebar = () => {
-  const handleSignOut = async () => {
-    try {
-      await signOut(auth)
-      navigate('/login') // Redirect to login page after sign out
-    } catch (error) {
-      console.error('Error signing out: ', error)
-    }
-  }
+  const { web3auth, logout } = useClinicAuthContext()
   return (
     <>
       <button
@@ -80,16 +75,18 @@ const Sidebar = () => {
           <ul>
             <div className="mt-auto">
               <div>
-                <li className="!my-10">
-                  <Link
-                    onClick={handleSignOut}
-                    className="pl-3 flex items-center p-2 rounded-[20px] group text-xl hover:bg-[#000000] text-[#e7e7e7] hover:shadow-lg"
-                  >
-                    <span className="flex-1 ms-3 whitespace-nowrap">
-                      Sign Out
-                    </span>
-                  </Link>
-                </li>
+                {web3auth && (
+                  <li className="!my-10">
+                    <Link
+                      onClick={logout}
+                      className="pl-3 flex items-center p-2 rounded-[20px] group text-xl hover:bg-[#000000] text-[#e7e7e7] hover:shadow-lg"
+                    >
+                      <span className="flex-1 ms-3 whitespace-nowrap">
+                        Sign Out
+                      </span>
+                    </Link>
+                  </li>
+                )}
               </div>
             </div>
           </ul>

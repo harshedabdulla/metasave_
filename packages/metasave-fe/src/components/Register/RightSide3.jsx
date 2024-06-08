@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSignupContext } from '../../pages/Signup';
+import { useSignupContext } from '../../pages/user/Signup';
 import axios from 'axios'
 import { abi } from '../../abi';
 import { addresses } from '../../constants/addresses.js';

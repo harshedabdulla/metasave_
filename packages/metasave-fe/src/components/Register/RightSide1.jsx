@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSignupContext } from '../../pages/Signup';
+import { useSignupContext } from '../../pages/user/Signup';
 
 const RightSide1 = ({ onNext }) => {
     const { email, setEmail, password, setPass, confirmpass, setConfirmPass, error, setError } = useSignupContext()

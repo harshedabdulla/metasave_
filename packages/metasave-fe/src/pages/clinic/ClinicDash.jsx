@@ -8,6 +8,7 @@ import Hex from '../../assets/hex.png'
 import Bell from '../../assets/bell.png'
 import Statistics from '../../assets/statistics.png'
 import Stethescope from '../../assets/stethoscope.png'
+import { Link } from 'react-router-dom'
 
 const ClinicDash = () => {
   const [investmentAmount, setInvestmentAmount] = useState(1000)
@@ -26,59 +27,67 @@ const ClinicDash = () => {
           <NotificationAddOutlinedIcon className="text-[#3a3a3a] text-3xl" />
         </div>
         <div className="my-10 grid grid-cols-2 md:grid-cols-2 gap-5">
-          <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between relative">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <h1 className="poppins text-2xl mb-3 md:mb-0 font-bold">
-                Patient Details
-              </h1>
-            </div>
-            <img
-              src={Stethescope}
-              alt="stethescope"
-              className="ml-auto w-20 h-20"
-            />
-          </div>
-
-          <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between">
-            <div className="relative flex flex-col mb-3 md:mb-20">
+          <Link to="/clinic/patientdetails">
+            <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between relative">
               <div className="flex flex-col md:flex-row justify-between items-center">
                 <h1 className="poppins text-2xl mb-3 md:mb-0 font-bold">
-                  Create notification
+                  Patient Details
                 </h1>
               </div>
               <img
-                src={Bell}
+                src={Stethescope}
                 alt="stethescope"
-                className="absolute top-12 right-0 w-12 h-16"
+                className="ml-auto w-20 h-20"
               />
             </div>
-          </div>
+          </Link>
+          <Link to="/clinic/createnotification">
+            <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between">
+              <div className="relative flex flex-col mb-3 md:mb-20">
+                <div className="flex flex-col md:flex-row justify-between items-center">
+                  <h1 className="poppins text-2xl mb-3 md:mb-0 font-bold">
+                    Create notification
+                  </h1>
+                </div>
+                <img
+                  src={Bell}
+                  alt="stethescope"
+                  className="absolute top-12 right-0 w-12 h-16"
+                />
+              </div>
+            </div>
+          </Link>
         </div>
 
         <div className="my-4 grid grid-cols-2 md:grid-cols-2 gap-5">
-          <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <h1 className="poppins text-2xl mb-3 md:mb-0 font-bold">
-                Statistics
-              </h1>
+          <Link to="/clinic/clinicstatistics">
+            <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between">
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <h1 className="poppins text-2xl mb-3 md:mb-0 font-bold">
+                  Statistics
+                </h1>
+              </div>
+              <img
+                src={Statistics}
+                alt="stethescope"
+                className="ml-auto w-20 h-20"
+              />
             </div>
-            <img
-              src={Statistics}
-              alt="stethescope"
-              className="ml-auto w-20 h-20"
-            />
-          </div>
+          </Link>
+
           <div className="relative rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <h1 className="poppins text-2xl font-bold">
-                Recent Appointments
-              </h1>
-            </div>
-            <img
-              src={Hex}
-              alt="stethescope"
-              className="absolute top-16 right-4  w-16 h-16"
-            />
+            <Link to="/clinic/recentappointments">
+              <div className="flex flex-col md:flex-row justify-between items-center">
+                <h1 className="poppins text-2xl font-bold">
+                  Recent Appointments
+                </h1>
+              </div>
+              <img
+                src={Hex}
+                alt="stethescope"
+                className="absolute top-16 right-4  w-16 h-16"
+              />
+            </Link>
 
             <div className="flex justify-between items-end mt-12"></div>
           </div>

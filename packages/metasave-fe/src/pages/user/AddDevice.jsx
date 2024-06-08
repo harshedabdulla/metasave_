@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import Sidebar from '../components/Dashboard/Sidebar'
+import Sidebar from '../../components/Dashboard/Sidebar'
 import Modal from './Modal' // Make sure this path is correct
-import { useMainContext } from '../context/MainContext'
-import { useAuthContext } from '../context/AuthContext'
-import { abi } from '../abi'
-import { addresses } from '../constants/addresses'
+import { useMainContext } from '../../context/MainContext'
+import { useAuthContext } from '../../context/AuthContext'
+import { abi } from '../../abi'
+import { addresses } from '../../constants/addresses'
 // import { createBluetooth } from 'node-ble'
 import axios from 'axios'
 
