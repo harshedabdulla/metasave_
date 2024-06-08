@@ -13,127 +13,111 @@ const Personal = () => {
 
   return (
     <div className="my-10">
-      <div className="pl-10 pr-5 py-5 bg-[#B3DEE2] rounded-[12px] flex flex-col">
-        <div className="flex justify-between items-center">
-          {editMode.edit && editMode.mode == 'name' ? (
-            <input
-              type="text"
-              name=""
-              className="text-[#3a3a3a] font-semibold poppins text-2xl my-5 bg-transparent focus:!outline-none border-b border-gray-400 border-b-2 pl-3"
-              defaultValue={userDetails.name || 'Username'}
-              id=""
-            />
-          ) : (
-            <h1 className="text-[#3a3a3a] font-semibold poppins text-2xl my-5">
-              {' '}
-              {userDetails?.name || 'Username'}
-            </h1>
-          )}
-          {editMode.edit && editMode.mode == 'name' ? (
-            <div
-              onClick={() => setEditMode({ edit: false })}
-              className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
-            >
-              <DoneIcon />
-              <span className="ml-3 poppins font-semibold">Save</span>
+      <h1 className='text-black text-3xl font-bold'>My Profile</h1>
+      <div className='my-20'> 
+        <div className='w-full grid grid-cols-2 my-16'>
+          <div>
+            <div className='w-[80%] flex justify-between'>
+              <h4 className='font-bold text-2xl'>Name</h4>
+              {editMode.edit && editMode.mode == 'name' ? (
+              <div
+                onClick={() => setEditMode({ edit: false })}
+                className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
+              >
+                <DoneIcon />
+                <span className="ml-3 poppins font-semibold">Save</span>
+              </div>
+              ) : (
+                <div
+                  onClick={() => setEditMode({ mode: 'name', edit: true })}
+                  className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                >
+                  <i className="fa-solid fa-pen-to-square text-blue-500 text-2xl"></i>
+                </div>
+              )}
             </div>
-          ) : (
-            <div
-              onClick={() => setEditMode({ mode: 'name', edit: true })}
-              className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
-            >
-              <EditIcon />
-              <span className="ml-3 poppins font-semibold">Edit</span>
+            <input type="text" defaultValue='Ram' className='w-[80%] border-t-0 border-l-0 border-r-0 border-2 border-gray-300 outline-none my-3 text-xl' readOnly={!editMode.edit && editMode.mode != 'name'} />
+          </div>
+          <div>
+            <div className='w-[80%] flex justify-between'>
+              <h4 className='font-bold text-2xl'>Email</h4>
+              {editMode.edit && editMode.mode == 'email' ? (
+              <div
+                onClick={() => setEditMode({ edit: false })}
+                className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
+              >
+                <DoneIcon />
+                <span className="ml-3 poppins font-semibold">Save</span>
+              </div>
+              ) : (
+                <div
+                  onClick={() => setEditMode({ mode: 'email', edit: true })}
+                  className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                >
+                  <i className="fa-solid fa-pen-to-square text-blue-500 text-2xl"></i>
+                </div>
+              )}
             </div>
-          )}
+            <input type="text" className='w-[80%] border-t-0 border-l-0 border-r-0 border-2 border-gray-300 outline-none my-3 text-xl' readOnly={!editMode.edit && editMode.mode != 'email'} />
+          </div>
         </div>
-        <div className="flex justify-between items-center">
-          {editMode.edit && editMode.mode == 'age' ? (
-            <input
-              type="text"
-              name=""
-              className="text-[#3a3a3a] font-medium min-w-[30%] poppins text-xl my-5 bg-transparent focus:!outline-none border-b border-gray-400 border-b-2 pl-3"
-              defaultValue={userDetails.age || 'N/A'}
-              id=""
-            />
-          ) : (
-            <h4 className="text-[#3a3a3a] font-medium poppins text-xl my-5">
-              <strong>Age: </strong> {userDetails?.age || 'N/A'}
-            </h4>
-          )}
-          {editMode.edit && editMode.mode == 'age' ? (
-            <div
-              onClick={() => setEditMode({ edit: false })}
-              className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
-            >
-              <DoneIcon />
-              <span className="ml-3 poppins font-semibold">Save</span>
+        <div className='grid grid-cols-2 my-16'>
+          <div>
+            <div className='w-[80%] flex justify-between'>
+              <h4 className='font-bold text-2xl'>Phone Number</h4>
+              {editMode.edit && editMode.mode == 'phone' ? (
+              <div
+                onClick={() => setEditMode({ edit: false })}
+                className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
+              >
+                <DoneIcon />
+                <span className="ml-3 poppins font-semibold">Save</span>
+              </div>
+              ) : (
+                <div
+                  onClick={() => setEditMode({ mode: 'phone', edit: true })}
+                  className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                >
+                  <i className="fa-solid fa-pen-to-square text-blue-500 text-2xl"></i>
+                </div>
+              )}
             </div>
-          ) : (
-            <div
-              onClick={() => setEditMode({ mode: 'age', edit: true })}
-              className="flex items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
-            >
-              <EditIcon />
-              <span className="ml-3 poppins font-semibold">Edit</span>
+            <input type="text" className='w-[80%] border-t-0 border-l-0 border-r-0 border-2 border-gray-300 outline-none my-3 text-xl' readOnly={!editMode.edit && editMode.mode != 'phone'} />
+          </div>
+          <div>
+            <div className='w-[80%] flex justify-between'>
+              <h4 className='font-bold text-2xl'>Address</h4>
+              {editMode.edit && editMode.mode == 'address' ? (
+              <div
+                onClick={() => setEditMode({ edit: false })}
+                className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
+              >
+                <DoneIcon />
+                <span className="ml-3 poppins font-semibold">Save</span>
+              </div>
+              ) : (
+                <div
+                  onClick={() => setEditMode({ mode: 'address', edit: true })}
+                  className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                >
+                  <i className="fa-solid fa-pen-to-square text-blue-500 text-2xl"></i>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-        <div className="flex justify-between items-center">
-          {editMode.edit && editMode.mode == 'phone' ? (
-            <input
-              type="text"
-              name=""
-              className="text-[#3a3a3a] font-medium min-w-[30%] poppins text-xl my-5 bg-transparent focus:!outline-none border-b border-gray-400 border-b-2 pl-3"
-              defaultValue={userDetails.phone || 'N/A'}
-              id=""
-            />
-          ) : (
-            <h4 className="text-[#3a3a3a] font-medium poppins text-xl my-5">
-              <strong>Mobile no: </strong> {userDetails?.phone || 'N/A'}
-            </h4>
-          )}
-          {editMode.edit && editMode.mode == 'phone' ? (
-            <div
-              onClick={() => setEditMode({ edit: false })}
-              className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
-            >
-              <DoneIcon />
-              <span className="ml-3 poppins font-semibold">Save</span>
-            </div>
-          ) : (
-            <div
-              onClick={() => setEditMode({ mode: 'phone', edit: true })}
-              className="flex items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
-            >
-              <EditIcon />
-              <span className="ml-3 poppins font-semibold">Edit</span>
-            </div>
-          )}
+            <input type="text" className='w-[80%] border-t-0 border-l-0 border-r-0 border-2 border-gray-300 outline-none my-3 text-xl' readOnly={!editMode.edit && editMode.mode != 'address'} />
+          </div>
         </div>
       </div>
-      <div className="my-16">
-        <h2 className="text-lg text-[#3a3a3a] font-semibold poppins">
-          Additional Details
-        </h2>
-        <div className="mt-5 pl-10 pr-5 py-5 bg-[#B3DEE2] rounded-[12px] flex flex-col">
-          <div className="my-3 flex justify-between">
-            <h3 className="poppins font-semibold text-ld  text-[#3a3a3a]">
-              Gender:
-              {editMode.edit && editMode.mode == 'gender' ? (
-                <select className="bg-transparent ml-5 font-medium poppins !outline-none">
-                  <option value="male" selected>
-                    Male
-                  </option>
-                  <option value="female">Female</option>
-                </select>
-              ) : (
-                <span className="ml-5 font-medium">
-                  {userDetails?.gender || 'N/A'}
-                </span>
-              )}
-            </h3>
-            {editMode.edit && editMode.mode == 'gender' ? (
+      <div className='flex justify-between w-[90%]'>
+        <h1 className='text-black text-3xl font-bold'>Emergency Contacts</h1>
+        <i className="cursor-pointer fa-solid fa-plus text-3xl"></i>
+      </div>
+      <div className='my-20'> 
+        <div className='w-full grid grid-cols-2 my-16'>
+          <div>
+            <div className='w-[80%] flex justify-between'>
+              <h4 className='font-bold text-2xl'>Name</h4>
+              {editMode.edit && editMode.mode == 'emergencyname1' ? (
               <div
                 onClick={() => setEditMode({ edit: false })}
                 className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
@@ -141,32 +125,21 @@ const Personal = () => {
                 <DoneIcon />
                 <span className="ml-3 poppins font-semibold">Save</span>
               </div>
-            ) : (
-              <div
-                onClick={() => setEditMode({ mode: 'gender', edit: true })}
-                className="flex items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
-              >
-                <EditIcon />
-                <span className="ml-3 poppins font-semibold">Edit</span>
-              </div>
-            )}
-          </div>
-          <div className="my-3 flex justify-between items-center">
-            <div>
-              <h3 className="poppins font-semibold text-ld text-[#3a3a3a]">
-                Address:
-              </h3>
-              {editMode.edit && editMode.mode == 'address' ? (
-                <textarea className="mt-2 bg-transparent ml-5 font-medium poppins !outline-none h-full w-full">
-                  {userDetails?.address || 'N/A'}
-                </textarea>
               ) : (
-                <p className="mt-2 font-medium poppins">
-                  {userDetails?.address || 'N/A'}
-                </p>
+                <div
+                  onClick={() => setEditMode({ mode: 'emergencyname1', edit: true })}
+                  className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                >
+                  <i className="fa-solid fa-pen-to-square text-blue-500 text-2xl"></i>
+                </div>
               )}
             </div>
-            {editMode.edit && editMode.mode == 'address' ? (
+            <input type="text" className='w-[80%] border-t-0 border-l-0 border-r-0 border-2 border-gray-300 outline-none my-3 text-xl' readOnly={!editMode.edit && editMode.mode != 'emergencyname1'} />
+          </div>
+          <div>
+            <div className='w-[80%] flex justify-between'>
+              <h4 className='font-bold text-2xl'>Phone Number</h4>
+              {editMode.edit && editMode.mode == 'emergencyphone1' ? (
               <div
                 onClick={() => setEditMode({ edit: false })}
                 className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
@@ -174,15 +147,62 @@ const Personal = () => {
                 <DoneIcon />
                 <span className="ml-3 poppins font-semibold">Save</span>
               </div>
-            ) : (
+              ) : (
+                <div
+                  onClick={() => setEditMode({ mode: 'emergencyphone1', edit: true })}
+                  className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                >
+                  <i className="fa-solid fa-pen-to-square text-blue-500 text-2xl"></i>
+                </div>
+              )}
+            </div>
+            <input type="text" className='w-[80%] border-t-0 border-l-0 border-r-0 border-2 border-gray-300 outline-none my-3 text-xl' readOnly={!editMode.edit && editMode.mode != 'emergencyphone1'} />
+          </div>
+        </div>
+        <div className='grid grid-cols-2 my-16'>
+          <div>
+            <div className='w-[80%] flex justify-between'>
+              <h4 className='font-bold text-2xl'>Name</h4>
+              {editMode.edit && editMode.mode == 'emergencyname2' ? (
               <div
-                onClick={() => setEditMode({ mode: 'address', edit: true })}
-                className="flex items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                onClick={() => setEditMode({ edit: false })}
+                className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
               >
-                <EditIcon />
-                <span className="ml-3 poppins font-semibold">Edit</span>
+                <DoneIcon />
+                <span className="ml-3 poppins font-semibold">Save</span>
               </div>
-            )}
+              ) : (
+                <div
+                  onClick={() => setEditMode({ mode: 'emergencyname2', edit: true })}
+                  className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                >
+                  <i className="fa-solid fa-pen-to-square text-blue-500 text-2xl"></i>
+                </div>
+              )}
+            </div>
+            <input type="text" className='w-[80%] border-t-0 border-l-0 border-r-0 border-2 border-gray-300 outline-none my-3 text-xl' readOnly={!editMode.edit && editMode.mode != 'emergencyname2'} />
+          </div>
+          <div>
+            <div className='w-[80%] flex justify-between'>
+              <h4 className='font-bold text-2xl'>Phone Number</h4>
+              {editMode.edit && editMode.mode == 'emergencyphone2' ? (
+              <div
+                onClick={() => setEditMode({ edit: false })}
+                className="flex items-center text-white bg-green-700 hover:bg-green-600 rounded-[10px] px-3 py-2 cursor-pointer"
+              >
+                <DoneIcon />
+                <span className="ml-3 poppins font-semibold">Save</span>
+              </div>
+              ) : (
+                <div
+                  onClick={() => setEditMode({ mode: 'emergencyphone2', edit: true })}
+                  className=" items-center text-[#4A9DFF] cursor-pointer md:flex hidden"
+                >
+                  <i className="fa-solid fa-pen-to-square text-blue-500 text-2xl"></i>
+                </div>
+              )}
+            </div>
+            <input type="text" className='w-[80%] border-t-0 border-l-0 border-r-0 border-2 border-gray-300 outline-none my-3 text-xl' readOnly={!editMode.edit && editMode.mode != 'emergencyphone2'} />
           </div>
         </div>
       </div>

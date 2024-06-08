@@ -5,6 +5,7 @@ import DataPopup from './DataPopup'
 import FallPopup from './FallPopup'
 import { Link } from 'react-router-dom'
 import { useMainContext } from '../../context/MainContext'
+import Vitals from './Profile/Vitals'
 
 function formatTime(timestamp) {
   const [hours, minutes, seconds] = timestamp.split(':');
@@ -69,7 +70,44 @@ const Dashboard = () => {
 
   return (
     <div className="px-5 py-5">
-      <div className="md:flex justify-between rounded-[15px] bg-[#FFEBFC] px-5 py-2">
+      <h3 className='my-5 text-3xl'><b>Hello,</b> Harshed</h3>
+      <h1 className='my-20 text-4xl'>My Clinic</h1>
+      <div className='grid grid-cols-2 gap-5'>
+        <div className='px-10 py-5 rounded-[20px] border border-2 border-black'>
+          <h3 className='font-bold text-3xl'>Appolo Hospital</h3>
+          <p className='my-5 font-bold'>Angamaly, Ernakulam</p>
+          <button className='mt-20 px-5 py-2 bg-[#AAF0D1] text-black rounded-[15px] ml-auto'>Change Clinic</button>
+        </div>
+
+        <div className='px-10 py-5 rounded-[20px] border border-2 border-black'>
+          <h3 className='font-bold text-3xl'>Departments</h3>
+          <div>
+            <div className='my-5'>
+              <div className='flex justify-between'>
+                <p className='font-bold'>Neurology</p>
+                <button className='font-bold'>Book Now</button>
+              </div>
+              <hr className='my-3' />
+            </div>
+            <div className='my-5'>
+              <div className='flex justify-between'>
+                <p className='font-bold'>Orthology</p>
+                <button className='font-bold'>Book Now</button>
+              </div>
+              <hr className='my-3' />
+            </div>
+            <div className='my-5'>
+              <div className='flex justify-between'>
+                <p className='font-bold'>Neurology</p>
+                <button className='font-bold'>Book Now</button>
+              </div>
+              <hr className='my-3' />
+            </div>
+          </div>
+        </div>
+      </div>
+      <Vitals />
+      {/* <div className="md:flex justify-between rounded-[15px] bg-[#FFEBFC] px-5 py-2">
         <div className="md:w-1/2 flex flex-col">
           <h1 className="text-[#3a3a3a] text-4xl font-bold my-3 md:my-5">
             Appolo Hospital
@@ -90,8 +128,8 @@ const Dashboard = () => {
           alt="doctor image"
           className="md:w-1/3 hidden lg:block"
         />
-      </div>
-      <div className="my-10">
+      </div> */}
+      {/* <div className="my-10">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <h1 className="poppins text-[#3a3a3a] text-3xl mb-3 md:mb-0 font-bold">
             Fall History
@@ -141,8 +179,8 @@ const Dashboard = () => {
             </div>
           )}
         </div>
-      </div>
-      {isImagePopupOpen && (
+      </div> */}
+      {/* {isImagePopupOpen && (
         <ImagePopup
           src={currentImage}
           alt="Dashboard Image"
@@ -159,7 +197,7 @@ const Dashboard = () => {
         <FallPopup
           onClose={closeFallPopup}
         />
-      )}
+      )} */}
     </div>
   )
 }

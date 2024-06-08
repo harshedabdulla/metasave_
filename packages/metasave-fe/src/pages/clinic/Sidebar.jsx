@@ -49,7 +49,7 @@ const Sidebar = () => {
             <ul className="space-y-2 font-medium">
               <li className="!my-10">
                 <Link
-                  to="/clinic/"
+                  to="/clinic/dashboard"
                   className={`pl-3 flex items-center p-2 rounded-[20px] group  text-[#e7e7e7] text-xl`}
                 >
                   <span className="flex-1 ms-3 whitespace-nowrap before:absolute before:content-['|'] before:left-6 before:h-full  before:opacity-0 group-hover:before:opacity-100 before:transition-opacity before:duration-300">

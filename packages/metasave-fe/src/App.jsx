@@ -35,7 +35,7 @@ function App() {
             {/* redirect to checkuser */}
             <Route
               path="/login"
-              element={loggedIn ? <Navigate to="/dashboard" /> : <Login />}
+              element={<Navigate to="/dashboard" />}
             />
             <Route path="/signup" element={<CheckUser />} />
             <Route path="/register" element={<CheckUser />} />
@@ -44,46 +44,49 @@ function App() {
             {/* on login success or register success, redirect to `/${localStorage.getItem('type')}/dashboard` */}
             <Route
               path="/user/dashboard"
-              element={loggedIn ? <Dashboard /> : <Login />}
+              element={<Dashboard />}
             />
             <Route
               path="/user/dashboard/*"
-              element={loggedIn ? <Dashboard /> : <Login />}
+              element={<Dashboard />}
             />
             <Route
               path="/user/newclinic/"
-              element={loggedIn ? <AddClinic /> : <Login />}
+              element={<AddClinic />}
             />
             <Route
               path="/user/newdevice/"
-              element={loggedIn ? <AddDevice /> : <Login />}
+              element={<AddDevice />}
             />
-            <Route path="/clinic/*" element={<ClinicLogin />} />
+
+
+            
+            <Route path="/clinic/*" element={<CDash />} />
             <Route path="/clinic/dashboard" element={<CDash />} />
             <Route
               path="/clinic/profile/"
-              element={loggedIn ? <ClinicProfile /> : <Login />}
+              element={<ClinicProfile />}
             />
             <Route path="/clinic/sigin/" element={<ClinicLogin />} />
             <Route
               path="/clinic/signup/"
-              element={loggedIn ? <ClinicRegister /> : <Login />}
+              element={<ClinicRegister />}
             />
             <Route
               path="/clinic/patientdetails"
-              element={loggedIn ? <PatientDetails /> : <Login />}
+              element={<PatientDetails />}
             />
             <Route
               path="/clinic/recentappointments"
-              element={loggedIn ? <RecentAppointments /> : <Login />}
+              element={<RecentAppointments />}
             />
             <Route
               path="/clinic/clinicstatistics"
-              element={loggedIn ? <ClinicStatistics /> : <Login />}
+              element={<ClinicStatistics />}
             />
             <Route
               path="/clinic/createnotification"
-              element={loggedIn ? <CreateNotification /> : <Login />}
+              element={<CreateNotification />}
             />
           </Routes>
         </BrowserRouter>
