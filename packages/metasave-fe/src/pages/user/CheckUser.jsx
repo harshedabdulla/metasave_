@@ -22,9 +22,7 @@ const CheckUser = () => {
           <h2 className="text-white text-3xl font-bold">Welcome to</h2>
           <h1 className="text-white text-7xl font-extrabold">MetaSave</h1>
           <p className="text-white text-sm mt-8">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non
-            velit mattis, lacinia tellus consectetur, pulvinar elit. Sed finibus
-            a lacus vitae congue.{' '}
+            Join us to experience the future of healthcare.{' '}
           </p>
         </div>
         <div className="w-2/3 flex items-center justify-center">
@@ -43,7 +41,7 @@ const CheckUser = () => {
                     Sign in as user
                   </div>
                 </Link>
-                <Link to="/clinic/sigin/">
+                <Link to="/clinic/signin/">
                   <div className="mt-6 bg-[#4A9DFF] w-1/2 py-2 rounded-lg">
                     Sign in as clinic
                   </div>

@@ -56,6 +56,7 @@ function App() {
             <Route path="/register" element={<NewIdentity />} />
 
             {/* User Routes */}
+            <Route path="/user/" element={<Dashboard />} />
             <Route path="/user/dashboard" element={<Dashboard />} />
             <Route path="/user/dashboard/profile" element={<Profile />} />
             <Route path="/user/newclinic" element={<AddClinic />} />

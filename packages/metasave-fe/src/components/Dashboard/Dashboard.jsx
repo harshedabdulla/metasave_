@@ -79,13 +79,17 @@ const Dashboard = () => {
       </h3>
       <h1 className="my-8 text-2xl">My Clinic</h1>
       <div className="grid grid-cols-2 gap-5">
-        <div className="px-10 py-5 rounded-[20px] border border-2 border-black">
-          <h3 className="font-bold text-3xl">Appolo Hospital</h3>
-          <p className="my-5 font-bold">Angamaly, Ernakulam</p>
-          <button className="mt-20 px-5 py-2 bg-[#AAF0D1] text-black rounded-[15px] ml-auto">
-            Change Clinic
-          </button>
-        </div>
+        <Link to="/user/myclinic">
+          <div className="px-10 py-5 rounded-[20px] border border-2 border-black">
+            <h3 className="font-bold text-3xl">Appolo Hospital</h3>
+            <p className="my-5 font-bold">Angamaly, Ernakulam</p>
+            <Link to="/user/newclinic">
+              <button className="mt-20 px-5 py-2 bg-[#AAF0D1] text-black rounded-[15px] ml-auto">
+                Change Clinic
+              </button>
+            </Link>
+          </div>
+        </Link>
 
         <div className="px-10 py-5 rounded-[20px] border border-2 border-black">
           <h3 className="font-bold text-3xl">Departments</h3>
@@ -93,7 +97,9 @@ const Dashboard = () => {
             <div className="my-5">
               <div className="flex justify-between">
                 <p className="font-bold">Neurology</p>
-                <button className="font-bold">Book Now</button>
+                <Link to="/user/department">
+                  <button className="font-bold">Book Now</button>
+                </Link>
               </div>
               <hr className="my-3" />
             </div>
@@ -107,7 +113,9 @@ const Dashboard = () => {
             <div className="my-5">
               <div className="flex justify-between">
                 <p className="font-bold">Neurology</p>
-                <button className="font-bold">Book Now</button>
+                <Link to="/user/department">
+                  <button className="font-bold">Book Now</button>
+                </Link>
               </div>
               <hr className="my-3" />
             </div>

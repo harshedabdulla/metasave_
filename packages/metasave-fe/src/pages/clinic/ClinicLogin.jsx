@@ -7,7 +7,7 @@ const ClinicLogin = () => {
 
   return (
     <div className="min-h-screen font-sans flex">
-      <div className="w-1/3 bg-[#2A9D8F] flex flex-col px-12 justify-center">
+      <div className="w-1/3 bg-[#4A9DFF] flex flex-col px-12 justify-center">
         <h2 className="text-white text-3xl font-bold">Welcome to</h2>
         <h1 className="text-white text-7xl font-extrabold">MetaSave</h1>
         <p className="text-white text-sm mt-8">
