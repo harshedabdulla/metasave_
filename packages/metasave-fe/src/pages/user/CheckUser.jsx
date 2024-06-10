@@ -38,7 +38,7 @@ const CheckUser = () => {
               </h2>
 
               <div className="mt-4 text-center text-white">
-                <Link to="/signin">
+                <Link to="/login">
                   <div className="mt-6 bg-[#2A9D8F] w-1/2 py-2 rounded-lg">
                     Sign in as user
                   </div>
@@ -49,12 +49,6 @@ const CheckUser = () => {
                   </div>
                 </Link>
               </div>
-              <p className="mt-4 text-sm">
-                New User?&nbsp;
-                <a href="/newidentity" className="font-medium underline">
-                  Register
-                </a>
-              </p>
             </div>
           </div>
         </div>
