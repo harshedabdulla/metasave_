@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import { useClinicAuthContext } from '../../context/ClinicAuthContext'
+import { useAuthContext } from '../../context/AuthContext'
 
-const ClinicLogin = () => {
-  const { login, web3auth } = useClinicAuthContext()
+const UserLogin = () => {
+  const { login, web3auth } = useAuthContext()
   const [error, setError] = useState('')
 
   return (
     <div className="min-h-screen font-sans flex">
-      <div className="w-1/3 bg-[#4A9DFF] flex flex-col px-12 justify-center">
+      <div className="w-1/3 bg-[#2A9D8F] flex flex-col px-12 justify-center">
         <h2 className="text-white text-3xl font-bold">Welcome to</h2>
         <h1 className="text-white text-7xl font-extrabold">MetaSave</h1>
         <p className="text-white text-sm mt-8">
@@ -21,7 +21,7 @@ const ClinicLogin = () => {
           </div>
           <div>
             <h2 className="mt-6 text-3xl font-bold text-gray-900">
-              Sign in to your clinic account
+              Sign in to your user account
             </h2>
           </div>
           <div className="my-10">
@@ -43,4 +43,4 @@ const ClinicLogin = () => {
   )
 }
 
-export default ClinicLogin
+export default UserLogin

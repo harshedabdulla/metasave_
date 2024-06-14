@@ -8,9 +8,9 @@ import { useMainContext } from '../../context/MainContext'
 import Vitals from './Profile/Vitals'
 
 function formatTime(timestamp) {
-  const [hours, minutes, seconds] = timestamp.split(':');
-  const formattedTime = `${hours}:${minutes}:${seconds}`;
-  return formattedTime;
+  const [hours, minutes, seconds] = timestamp.split(':')
+  const formattedTime = `${hours}:${minutes}:${seconds}`
+  return formattedTime
 }
 
 const Dashboard = () => {
@@ -43,25 +43,29 @@ const Dashboard = () => {
   }
 
   function formatDate(dateString) {
-    const date = new Date(dateString);
-    
-    const year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-    
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-    
-    return `${day}-${month}-${year}`;
+    const date = new Date(dateString)
+
+    const year = date.getFullYear()
+    let month = date.getMonth() + 1
+    let day = date.getDate()
+
+    month = month < 10 ? '0' + month : month
+    day = day < 10 ? '0' + day : day
+
+    return `${day}-${month}-${year}`
   }
 
   const getFallsForDate = (date) => {
-    return fallDetails.filter(detail => detail.date == date).sort((a, b) => b.timestamp - a.timestamp) || []
+    return (
+      fallDetails
+        .filter((detail) => detail.date == date)
+        .sort((a, b) => b.timestamp - a.timestamp) || []
+    )
   }
 
   React.useEffect(() => {
     const date = formatDate(selectedDate)
-    if(fallDetails.length > 0){
+    if (fallDetails.length > 0) {
       const falls = getFallsForDate(date)
       console.log(falls)
       setFallsForSelectedDate(falls)
@@ -70,38 +74,50 @@ const Dashboard = () => {
 
   return (
     <div className="px-5 py-5">
-      <h3 className='my-5 text-3xl'><b>Hello,</b> Harshed</h3>
-      <h1 className='my-20 text-4xl'>My Clinic</h1>
-      <div className='grid grid-cols-2 gap-5'>
-        <div className='px-10 py-5 rounded-[20px] border border-2 border-black'>
-          <h3 className='font-bold text-3xl'>Appolo Hospital</h3>
-          <p className='my-5 font-bold'>Angamaly, Ernakulam</p>
-          <button className='mt-20 px-5 py-2 bg-[#AAF0D1] text-black rounded-[15px] ml-auto'>Change Clinic</button>
-        </div>
+      <h3 className="my-5 text-3xl">
+        <b>Hello,</b> Harshed
+      </h3>
+      <h1 className="my-8 text-2xl">My Clinic</h1>
+      <div className="grid grid-cols-2 gap-5">
+        <Link to="/user/myclinic">
+          <div className="px-10 py-5 rounded-[20px] border border-2 border-black">
+            <h3 className="font-bold text-3xl">Appolo Hospital</h3>
+            <p className="my-5 font-bold">Angamaly, Ernakulam</p>
+            <Link to="/user/newclinic">
+              <button className="mt-20 px-5 py-2 bg-[#AAF0D1] text-black rounded-[15px] ml-auto">
+                Change Clinic
+              </button>
+            </Link>
+          </div>
+        </Link>
 
-        <div className='px-10 py-5 rounded-[20px] border border-2 border-black'>
-          <h3 className='font-bold text-3xl'>Departments</h3>
+        <div className="px-10 py-5 rounded-[20px] border border-2 border-black">
+          <h3 className="font-bold text-3xl">Departments</h3>
           <div>
-            <div className='my-5'>
-              <div className='flex justify-between'>
-                <p className='font-bold'>Neurology</p>
-                <button className='font-bold'>Book Now</button>
+            <div className="my-5">
+              <div className="flex justify-between">
+                <p className="font-bold">Neurology</p>
+                <Link to="/user/department">
+                  <button className="font-bold">Book Now</button>
+                </Link>
               </div>
-              <hr className='my-3' />
+              <hr className="my-3" />
             </div>
-            <div className='my-5'>
-              <div className='flex justify-between'>
-                <p className='font-bold'>Orthology</p>
-                <button className='font-bold'>Book Now</button>
+            <div className="my-5">
+              <div className="flex justify-between">
+                <p className="font-bold">Orthology</p>
+                <button className="font-bold">Book Now</button>
               </div>
-              <hr className='my-3' />
+              <hr className="my-3" />
             </div>
-            <div className='my-5'>
-              <div className='flex justify-between'>
-                <p className='font-bold'>Neurology</p>
-                <button className='font-bold'>Book Now</button>
+            <div className="my-5">
+              <div className="flex justify-between">
+                <p className="font-bold">Neurology</p>
+                <Link to="/user/department">
+                  <button className="font-bold">Book Now</button>
+                </Link>
               </div>
-              <hr className='my-3' />
+              <hr className="my-3" />
             </div>
           </div>
         </div>
