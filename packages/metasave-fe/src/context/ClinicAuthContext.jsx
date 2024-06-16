@@ -276,27 +276,31 @@ export const ClinicAuthContextProvider = ({ children }) => {
   }
   const login = async () => {
     try {
+      console.log('Starting login process...')
       const web3authProvider = await web3auth?.connectTo(
         WALLET_ADAPTERS.OPENLOGIN,
         {
           loginProvider: 'google',
         }
       )
-      console.log('web3authprovider: ', web3authProvider)
+      console.log('Web3Auth provider:', web3authProvider)
       const walletProvider = getWalletProvider(web3authProvider)
       const walletAddress = await walletProvider.getAddress()
       const priv_key =
         '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
-      console.log('priv_key', priv_key)
+      console.log('Private key:', priv_key)
+      console.log('Wallet address:', walletAddress)
       setWalletProvider(walletProvider)
       setWalletAddress(walletAddress)
       setWeb3AuthProvider(web3authProvider)
       setPrivKey(priv_key)
 
       const verify = await verifyProof(walletAddress, walletProvider)
+      console.log('Verification result:', verify)
 
       if (verify.proceed === true) {
         if (verify.newUser === true) {
+          console.log('Redirecting to profile creation...')
           window.location.replace('/clinic/profile')
         } else {
           setLoggedIn(web3auth?.status === 'connected' ? true : false)
@@ -306,18 +310,21 @@ export const ClinicAuthContextProvider = ({ children }) => {
             abi.MetaSave
           )
           const IPFSid = await MetaSave.getIPFSFileName(CF)
+          console.log('IPFS ID:', IPFSid)
           if (!IPFSid) {
+            console.log('Redirecting to registration...')
             window.location.replace('/clinic/register')
           } else {
-            window.location.replace('/clinic/dashboard') // Redirect to dashboard
+            console.log('Redirecting to dashboard...')
+            window.location.replace('/clinic/dashboard')
           }
         }
       } else if (verify.proceed === false) {
-        console.log('verification failed')
+        console.log('Verification failed, logging out...')
         await web3auth.logout()
       }
     } catch (e) {
-      console.log(e)
+      console.log('Login error:', e)
     }
   }
 
