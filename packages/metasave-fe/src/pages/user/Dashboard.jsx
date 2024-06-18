@@ -12,7 +12,7 @@ const Dashboard = () => {
 
   React.useEffect(() => {
     initWeb3Auth()
-  }, [initWeb3Auth])
+  }, [])
 
   React.useEffect(() => {
     if (CFAddress && walletProvider) {
@@ -22,10 +22,7 @@ const Dashboard = () => {
     }
   }, [
     CFAddress,
-    walletProvider,
-    fetchUserDetails,
-    fetchFallDetails,
-    fetchDevices,
+    walletProvider
   ])
 
   return (

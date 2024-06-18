@@ -4,7 +4,7 @@ import Logo from '../../assets/logo.svg'
 import { useAuthContext } from '../../context/AuthContext'
 
 const Sidebar = () => {
-  const { web3auth, logout } = useAuthContext()
+  const { web3auth, Logout } = useAuthContext()
   return (
     <>
       <button
@@ -77,7 +77,7 @@ const Sidebar = () => {
                 {web3auth && (
                   <li className="!my-10">
                     <Link
-                      onClick={logout}
+                      onClick={Logout}
                       className="pl-3 flex items-center p-2 rounded-[20px] group text-xl hover:bg-[#000000] text-[#e7e7e7] hover:shadow-lg"
                     >
                       <span className="flex-1 ms-3 whitespace-nowrap">

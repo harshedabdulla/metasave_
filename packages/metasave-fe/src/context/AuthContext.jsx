@@ -230,7 +230,7 @@ export const AuthContextProvider = ({ children }) => {
 
     if (verify.proceed == true) {
       if (verify.newUser == true) {
-        window.location.replace(`/${localStorage.getItem('userType')}/dashboard/profile`)
+        window.location.replace(`/${localStorage.getItem('userType')}/dashboard`)
       } else {
         setLoggedIn(web3auth?.status === 'connected' ? true : false)
         const CF = getCFAddress(priv_key)

@@ -61,6 +61,7 @@ const fetchFallData = async(req, res) => {
         }catch(err){
             console.log(err)
         }
+        console.log(result1)
         res.json({result: result1})
     } catch (error) {
         console.log(error)

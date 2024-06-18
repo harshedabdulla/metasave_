@@ -80,6 +80,8 @@ export const MainContextProvider = ({children}) => {
 
             const result = res.data.result
 
+            console.log('fall detailsssss', result)
+
             const uniqueObjects = {};
 
             // result.forEach(obj => {

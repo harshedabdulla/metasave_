@@ -2,9 +2,28 @@ import React from 'react'
 import Personal from './Profile/Personal'
 import FallDetails from './Profile/FallDetails'
 import Sidebar from './Sidebar'
+import { useMainContext } from '../../context/MainContext'
+import { useAuthContext } from '../../context/AuthContext'
 
 const Profile = () => {
   const [slide, setSlide] = React.useState('personal')
+  const { initWeb3Auth, CFAddress, walletProvider } = useAuthContext()
+
+  const {fetchUserDetails, fetchFallDetails} = useMainContext()
+
+  React.useEffect(() => {
+    initWeb3Auth()
+  }, [])
+
+  React.useEffect(() => {
+    if (CFAddress && walletProvider) {
+      fetchUserDetails(walletProvider, CFAddress)
+      fetchFallDetails(walletProvider, CFAddress)
+    }
+  }, [
+    CFAddress,
+    walletProvider,
+  ])
 
   return (
     <div>

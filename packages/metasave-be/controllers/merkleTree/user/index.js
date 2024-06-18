@@ -36,7 +36,7 @@ const userMerkleTree = async (req, res) => {
 
             treeJSON = tree.dump()
 
-            if(req.body.type == 'patient'){
+            if(req.body.type == 'user'){
                 try{
                     console.log('Granting USER role to new user')
                     await userOperation(abi.MetaSave, 'grantUserRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)

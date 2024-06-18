@@ -18,7 +18,7 @@ const Dashboard = () => {
   const [isDataPopupOpen, setIsDataPopupOpen] = useState(false)
   const [currentImage, setCurrentImage] = useState('')
   const [currentData, setCurrentData] = useState('')
-  const { fallDetails, fallPopup, setFallPopup } = useMainContext()
+  const { fallDetails, fallPopup, setFallPopup, userDetails } = useMainContext()
   const [selectedDate, setSelectedDate] = useState(Date)
   const [fallsForSelectedDate, setFallsForSelectedDate] = useState([])
 
@@ -75,7 +75,7 @@ const Dashboard = () => {
   return (
     <div className="px-5 py-5">
       <h3 className="my-5 text-3xl">
-        <b>Hello,</b> Harshed
+        <b>Hello,</b> {userDetails && userDetails.name}
       </h3>
       <h1 className="my-8 text-2xl">My Clinic</h1>
       <div className="grid grid-cols-2 gap-5">
