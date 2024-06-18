@@ -36,14 +36,23 @@ const userMerkleTree = async (req, res) => {
 
             treeJSON = tree.dump()
 
-            try{
-                console.log('Granting USER role to new user')
-                await userOperation(abi.MetaSave, 'grantUserRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)
-            }catch(err){
-                console.log(`Error while granting USER role to ${CFAddress}`)
+            if(req.body.type == 'patient'){
+                try{
+                    console.log('Granting USER role to new user')
+                    await userOperation(abi.MetaSave, 'grantUserRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)
+                }catch(err){
+                    console.log(`Error while granting USER role to ${CFAddress}`)
+                }
+                console.log('USER role granted successfully!')
+            }else{
+                try{
+                    console.log('Granting HOSPITAL role to new user')
+                    await userOperation(abi.MetaSave, 'grantHospitalRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)
+                }catch(err){
+                    console.log(`Error while granting HOSPITAL role to ${CFAddress}`)
+                }
+                console.log('HOSPITAL role granted successfully!')
             }
-
-            console.log('USER role granted successfully!')
 
             try{
                 console.log('Setting root and IPFS CID')
@@ -84,14 +93,23 @@ const userMerkleTree = async (req, res) => {
 
                 treeCID = await insertMT(tree.dump())
 
-                try{
-                    console.log('Granting USER role to new user')
-                    await userOperation(abi.MetaSave, 'grantUserRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)
-                }catch(err){
-                    console.log(`Error while granting USER role to ${CFAddress}`)
+                if(req.body.type == 'user'){
+                    try{
+                        console.log('Granting USER role to new user')
+                        await userOperation(abi.MetaSave, 'grantUserRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)
+                    }catch(err){
+                        console.log(`Error while granting USER role to ${CFAddress}`)
+                    }
+                    console.log('USER role granted successfully!')
+                }else{
+                    try{
+                        console.log('Granting HOSPITAL role to new user')
+                        await userOperation(abi.MetaSave, 'grantHospitalRole', [CFAddress], addresses.MetaSave, ADMIN_PRIV_KEY)
+                    }catch(err){
+                        console.log(`Error while granting HOSPITAL role to ${CFAddress}`)
+                    }
+                    console.log('HOSPITAL role granted successfully!')
                 }
-
-                console.log('USER role granted successfully!')
 
                 try{
                     console.log('Setting root and IPFS CID')

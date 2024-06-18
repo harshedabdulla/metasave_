@@ -112,7 +112,7 @@ export const AuthContextProvider = ({ children }) => {
     await checkLoggedIn(web3auth)
   }
 
-  const verifyProof = async (walletAddress, walletProvider) => {
+  const verifyProof = async (walletAddress, walletProvider, type) => {
     try {
       // const priv_key = await walletProvider.getPrivateKey()
       const priv_key =
@@ -164,6 +164,7 @@ export const AuthContextProvider = ({ children }) => {
           msg,
           treeCID,
           CFAddress: CF,
+          type
         },
         {
           headers: {
@@ -206,7 +207,7 @@ export const AuthContextProvider = ({ children }) => {
     }
   }
 
-  const login = async () => {
+  const login = async (type) => {
     const web3authProvider = await web3auth?.connectTo(
       WALLET_ADAPTERS.OPENLOGIN,
       {
@@ -225,11 +226,11 @@ export const AuthContextProvider = ({ children }) => {
     setWeb3AuthProvider(web3authProvider)
     setPrivKey(priv_key)
 
-    const verify = await verifyProof(walletAddress, walletProvider)
+    const verify = await verifyProof(walletAddress, walletProvider, type)
 
     if (verify.proceed == true) {
       if (verify.newUser == true) {
-        window.location.replace('/user/dashboard/profile')
+        window.location.replace(`/${localStorage.getItem('userType')}/dashboard/profile`)
       } else {
         setLoggedIn(web3auth?.status === 'connected' ? true : false)
         const CF = getCFAddress(priv_key)
@@ -239,9 +240,9 @@ export const AuthContextProvider = ({ children }) => {
         )
         const IPFSid = await MetaSave.getIPFSFileName(CF)
         if (!IPFSid) {
-          window.location.replace('/user/register')
+          window.location.replace(`/${localStorage.getItem('userType')}/register`)
         } else {
-          window.location.replace('/user/dashboard')
+          window.location.replace(`/${localStorage.getItem('userType')}/dashboard`)
         }
       }
     } else if (verify.proceed == false) {

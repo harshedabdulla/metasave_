@@ -2,10 +2,10 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link, useParams } from 'react-router-dom'
 import Logo from '../../assets/logo.svg'
-import { useClinicAuthContext } from '../../context/ClinicAuthContext'
+import { useAuthContext } from '../../context/AuthContext'
 
 const Sidebar = () => {
-  const { web3auth, logout } = useClinicAuthContext()
+  const { web3auth, logout } = useAuthContext()
   return (
     <>
       <button

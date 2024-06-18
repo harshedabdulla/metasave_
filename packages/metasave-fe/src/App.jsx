@@ -70,6 +70,7 @@ function App() {
             {/* Clinic Routes */}
             <Route path="/clinic/dashboard" element={<CDash />} />
             <Route path="/clinic/profile" element={<ClinicProfile />} />
+            <Route path="/clinic/dashboard/profile" element={<ClinicProfile />} />
             <Route path="/clinic/signin" element={<ClinicLogin />} />
             <Route path="/clinic/signup" element={<ClinicRegister />} />
             <Route path="/clinic/patientdetails" element={<PatientDetails />} />

@@ -5,18 +5,15 @@ import './styles/index.css'
 import './styles/fonts.css'
 import { MainContextProvider } from './context/MainContext.jsx'
 import { AuthContextProvider } from './context/AuthContext.jsx'
-import { ClinicAuthContextProvider } from './context/ClinicAuthContext.jsx'
 import { SignupProvider } from './pages/user/Signup.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <MainContextProvider>
       <AuthContextProvider>
-        <ClinicAuthContextProvider>
-          <SignupProvider>
-            <App />
-          </SignupProvider>
-        </ClinicAuthContextProvider>
+        <SignupProvider>
+          <App />
+        </SignupProvider>
       </AuthContextProvider>
     </MainContextProvider>
   </React.StrictMode>
