@@ -28,9 +28,9 @@ const ClinicDash = () => {
         </div>
         <div className="my-10 grid grid-cols-2 md:grid-cols-2 gap-5">
           <Link to="/clinic/patientdetails">
-            <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between relative">
+            <div className="rounded-[15px] bg-white border-2 border-black px-5 py-5 flex flex-col justify-between relative">
               <div className="flex flex-col md:flex-row justify-between items-center">
-                <h1 className="poppins text-2xl mb-3 md:mb-0 font-bold">
+                <h1 className="poppins text-2xl mb-3 md:mb-0 ">
                   Patient Details
                 </h1>
               </div>
@@ -42,10 +42,10 @@ const ClinicDash = () => {
             </div>
           </Link>
           <Link to="/clinic/createnotification">
-            <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between">
+            <div className="rounded-[15px] bg-white border-2 border-black px-5 py-5 flex flex-col justify-between">
               <div className="relative flex flex-col mb-3 md:mb-20">
                 <div className="flex flex-col md:flex-row justify-between items-center">
-                  <h1 className="poppins text-2xl mb-3 md:mb-0 font-bold">
+                  <h1 className="poppins text-2xl mb-3 md:mb-0 ">
                     Create notification
                   </h1>
                 </div>
@@ -61,11 +61,9 @@ const ClinicDash = () => {
 
         <div className="my-4 grid grid-cols-2 md:grid-cols-2 gap-5">
           <Link to="/clinic/clinicstatistics">
-            <div className="rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between">
+            <div className="rounded-[15px] bg-white border-2 border-black px-5 py-5 flex flex-col justify-between">
               <div className="flex flex-col md:flex-row justify-between items-center">
-                <h1 className="poppins text-2xl mb-3 md:mb-0 font-bold">
-                  Statistics
-                </h1>
+                <h1 className="poppins text-2xl mb-3 md:mb-0 ">Statistics</h1>
               </div>
               <img
                 src={Statistics}
@@ -75,12 +73,10 @@ const ClinicDash = () => {
             </div>
           </Link>
 
-          <div className="relative rounded-[15px] bg-[#B3DEE2] px-5 py-5 flex flex-col justify-between">
-            <Link to="/clinic/recentappointments">
+          <div className="relative rounded-[15px] bg-white border-2 border-black px-5 py-5 flex flex-col justify-between">
+            <Link to="/clinic/fallhistory">
               <div className="flex flex-col md:flex-row justify-between items-center">
-                <h1 className="poppins text-2xl font-bold">
-                  Recent Appointments
-                </h1>
+                <h1 className="poppins text-2xl ">Patient Fall History</h1>
               </div>
               <img
                 src={Hex}
