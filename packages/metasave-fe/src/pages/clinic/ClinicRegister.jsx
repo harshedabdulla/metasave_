@@ -1,15 +1,34 @@
 import React, { useState } from 'react'
+import { useMainContext } from '../../context/MainContext'
+import { useAuthContext } from '../../context/AuthContext'
 
 const ClinicRegister = () => {
+  const { insertClinicDetails } = useMainContext()
+  const { CFAddress, AAProvider } = useAuthContext()
   const [email, setEmail] = useState('')
   const [address1, setAddress1] = useState('')
   const [firstPhone, setFirstPhone] = useState('')
   const [secondPhone, setSecondPhone] = useState('')
   const [clinicName, setClinicName] = useState('')
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
+const handleSubmit = async (event) => {
+  event.preventDefault();
+
+  try {
+    const data = {
+      email,
+      address1,
+      firstPhone,
+      secondPhone,
+      clinicName
+    };
+    console.log("clinicData: ", data);
+    await insertClinicDetails(data);
+    window.location.href = '/dashboard';
+  } catch (error) {
+    console.error('Error registering clinic:', error);
   }
+};
 
   return (
     <div className="min-h-screen flex">
@@ -90,7 +109,6 @@ const ClinicRegister = () => {
             <div className="mt-16 w-1/2 mx-auto">
               <button
                 type="submit"
-                href="/dashboard"
                 className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-[#4AA9FF] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
               >
                 Register

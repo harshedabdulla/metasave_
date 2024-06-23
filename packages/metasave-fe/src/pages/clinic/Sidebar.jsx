@@ -36,7 +36,7 @@ const Sidebar = () => {
         className="fixed top-18 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[#4A9DFF]">
+        <div className="flex flex-col h-full px-3 py-4 overflow-y-auto bg-[#3a86ff]">
           <div>
             <div className="flex mb-6">
               <div className="flex items-center mt-4">

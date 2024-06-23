@@ -18,7 +18,6 @@ import ClinicRegister from './pages/clinic/ClinicRegister.jsx'
 import CDash from './pages/clinic/CDash.jsx'
 import ClinicProfile from './pages/clinic/ClinicProfile.jsx'
 import PatientDetails from './pages/clinic/PatientDetails.jsx'
-import RecentAppointments from './pages/clinic/RecentAppointment.jsx'
 import ClinicStatistics from './pages/clinic/ClinicStatistics.jsx'
 import CreateNotification from './pages/clinic/CreateNotification.jsx'
 import Profile from './components/Dashboard/Profile.jsx'
@@ -26,6 +25,7 @@ import FirstClinic from './pages/user/FirstClinic.jsx'
 import MyClinic from './pages/user/MyClinic.jsx'
 import Department from './pages/user/Department.jsx'
 import UserRegister from './pages/user/UserRegister.jsx'
+import FallHistory from './pages/clinic/FallHistory.jsx'
 
 function App() {
   const { loggedIn, web3auth, initWeb3Auth } = useAuthContext()
@@ -70,14 +70,13 @@ function App() {
             {/* Clinic Routes */}
             <Route path="/clinic/dashboard" element={<CDash />} />
             <Route path="/clinic/profile" element={<ClinicProfile />} />
-            <Route path="/clinic/dashboard/profile" element={<ClinicProfile />} />
+            <Route
+              path="/clinic/dashboard/profile"
+              element={<ClinicProfile />}
+            />
             <Route path="/clinic/signin" element={<ClinicLogin />} />
             <Route path="/clinic/signup" element={<ClinicRegister />} />
             <Route path="/clinic/patientdetails" element={<PatientDetails />} />
-            <Route
-              path="/clinic/recentappointments"
-              element={<RecentAppointments />}
-            />
             <Route
               path="/clinic/clinicstatistics"
               element={<ClinicStatistics />}
@@ -86,6 +85,7 @@ function App() {
               path="/clinic/createnotification"
               element={<CreateNotification />}
             />
+            <Route path="/clinic/fallhistory" element={<FallHistory />} />
           </Routes>
         </BrowserRouter>
       )}
