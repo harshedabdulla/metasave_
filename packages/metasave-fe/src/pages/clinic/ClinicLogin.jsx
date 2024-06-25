@@ -1,9 +1,23 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useAuthContext } from '../../context/AuthContext'
 
 const ClinicLogin = () => {
   const { login, web3auth } = useAuthContext()
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleLogin = async () => {
+    setLoading(true)
+    setError('')
+    try {
+      localStorage.setItem('userType', 'clinic')
+      await login('clinic')
+    } catch (err) {
+      setError('Failed to log in. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <div className="min-h-screen font-sans flex">
@@ -26,14 +40,11 @@ const ClinicLogin = () => {
           </div>
           <div className="my-10">
             {error && <p className="text-center text-red-600 my-5">{error}</p>}
-            {web3auth ? (
+            {loading ? (
+              <p className="text-center text-gray-700">Logging in, please wait...</p>
+            ) : web3auth ? (
               <button
-                onClick={
-                  () => {
-                    localStorage.setItem('userType', 'clinic')
-                    login('clinic')
-                  }
-                }
+                onClick={handleLogin}
                 className="bg-[#383838] text-[#EFEFEF] text-center px-10 py-2 rounded-[10px] poppins hover:bg-[#2A2A2A] transition duration-300 ease-in-out w-full"
               >
                 Sign in with Google

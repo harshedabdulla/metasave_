@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Sidebar from './Sidebar'
 import LocalHospitalIcon from '@mui/icons-material/LocalHospital'
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined'
+import { useMainContext } from '../../context/MainContext'
+import { useAuthContext } from '../../context/AuthContext'
 
 const ClinicProfile = () => {
   const [clinicName, setClinicName] = useState('Woodland Clinic')
@@ -19,6 +21,23 @@ const ClinicProfile = () => {
   const [addressLine, setAddressLine] = useState('Singapore')
   const [editingAddress, setEditingAddress] = useState(false)
   const [newAddress, setNewAddress] = useState('')
+
+  const { initWeb3Auth, CFAddress, walletProvider } = useAuthContext()
+  const { fetchClinicDetails } = useMainContext()
+
+  useEffect(() => {
+    initWeb3Auth()
+  }, [])
+
+  useEffect(() => {
+    console.log("CFAddress:", CFAddress);
+console.log("walletProvider:", walletProvider);
+
+    if (CFAddress && walletProvider) {
+      fetchClinicDetails(walletProvider, CFAddress)
+      console.log("do")
+    }
+  }, [CFAddress, walletProvider])
 
   const handleEditClick = (field) => {
     switch (field) {
@@ -239,11 +258,6 @@ const ClinicProfile = () => {
               </div>
             )}
           </div>
-        </div>
-        <div className="flex justify-end mt-4 mr-5">
-          <button className="bg-[#4A9DFF] px-8 py-3 rounded-[15px] text-white hover:bg-blue-700">
-            Save changes
-          </button>
         </div>
       </div>
     </div>
