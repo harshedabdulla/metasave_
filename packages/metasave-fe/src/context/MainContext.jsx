@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { addresses } from '../constants/addresses'
 import { abi } from '../abi/index.js'
 import axios from 'axios'
@@ -26,6 +26,7 @@ export const MainContextProvider = ({ children }) => {
   const [fallPopup, setFallPopup] = React.useState(false)
   const [walletProvider, setWalletProvider] = React.useState()
   const [CFAddress, setCFAddress] = React.useState()
+  const [clinicDetails, setClinicDetails] = useState(null);
   const [devices, setDevices] = React.useState([
     // ...additional devices
   ])
@@ -160,7 +161,7 @@ export const MainContextProvider = ({ children }) => {
   const fetchClinicDetails = async (walletProvider, CFAddress) => {
     const MetaSave = await walletProvider.getContract(addresses.MetaSave, abi.MetaSave)
     console.log('fetchin clinic details for', CFAddress)
-    let IPFSid = 'QmcG553qsFk4cskCxMBukqEJSMv2oVm49kbC3Tc1zCAmz4'
+    let IPFSid = 'QmWKoLtSe1V53Z2F1ggZJb361LQhf1S46C742mddLnG2Me'
 
     try {
         const res = await axios.get(`${serverUrl}/user/${IPFSid}`)
