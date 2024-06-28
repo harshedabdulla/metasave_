@@ -43,21 +43,21 @@ const fetchFallData = async(req, res) => {
             const fallIpfsids = await contract.getFallData(CFAddress)
             
             
-            for (let i = 0; i < fallIpfsids.length; i++) {
-              const dataIPFS = fallIpfsids[i][1]
-              const imgIPFS = fallIpfsids[i][0]
-              const data = await fetchFallDataIPFS(dataIPFS);
-              if (data) {
-                  const jsonMap = {
-                      username: data.username,
-                      timestamp: data.timestamp,
-                      date: data.date,
-                      status: data.status,
-                      imgIPFS
-                  };
-                  result1.push(jsonMap);
-              }
-            }
+            // for (let i = 0; i < fallIpfsids.length; i++) {
+            //   const dataIPFS = fallIpfsids[i][1]
+            //   const imgIPFS = fallIpfsids[i][0]
+            //   const data = await fetchFallDataIPFS(dataIPFS);
+            //   if (data) {
+            //       const jsonMap = {
+            //           username: data.username,
+            //           timestamp: data.timestamp,
+            //           date: data.date,
+            //           status: data.status,
+            //           imgIPFS
+            //       };
+            //       result1.push(jsonMap);
+            //   }
+            // }
         }catch(err){
             console.log(err)
         }

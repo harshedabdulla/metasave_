@@ -75,7 +75,7 @@ function App() {
               element={<ClinicProfile />}
             />
             <Route path="/clinic/signin" element={<ClinicLogin />} />
-            <Route path="/clinic/signup" element={<ClinicRegister />} />
+            <Route path="/clinic/register" element={<ClinicRegister />} />
             <Route path="/clinic/patientdetails" element={<PatientDetails />} />
             <Route
               path="/clinic/clinicstatistics"

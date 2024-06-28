@@ -1,11 +1,16 @@
 import React, { useState } from 'react'
+import { useAuthContext } from '../../context/AuthContext'
+import { useMainContext } from '../../context/MainContext'
 
 const UserRegister = () => {
+  const { AAProvider } = useAuthContext()
+  const { insertUserDetails } = useMainContext()
+
   const [step, setStep] = useState(1)
   const [phone, setPhone] = useState('')
   const [address1, setAddress1] = useState('')
   const [age, setAge] = useState('')
-  const [gender, setGender] = useState('')
+  const [gender, setGender] = useState('male')
   const [name, setName] = useState('')
   const [emergencyContact1, setEmergencyContact1] = useState('')
   const [emergencyContact2, setEmergencyContact2] = useState('')
@@ -18,6 +23,26 @@ const UserRegister = () => {
       setStep(2)
     } else {
       // Final submission logic here, e.g., sending data to an API
+      const data = {
+        CF: '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f',
+        name,
+        email: 'aloshdhenny@gmail.com ',
+        age,
+        gender,
+        phone,
+        address: address1,
+        contacts: [
+          { name: emergencyContactName1, phoneNumber: emergencyContact1 },
+          { name: emergencyContactName2, phoneNumber: emergencyContact2 },
+        ],
+      }
+
+      console.log(data)
+
+      const res = await insertUserDetails(AAProvider, '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f', data)
+      if(res){
+        window.location.replace(`/${localStorage.getItem('userType')}/dashboard`)
+      }
     }
   }
 

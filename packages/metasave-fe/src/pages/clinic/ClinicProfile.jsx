@@ -23,21 +23,15 @@ const ClinicProfile = () => {
   const [newAddress, setNewAddress] = useState('')
 
   const { initWeb3Auth, CFAddress, walletProvider } = useAuthContext()
-  const { fetchClinicDetails } = useMainContext()
+  const { clinicDetails, fetchClinicDetails } = useMainContext()
 
   useEffect(() => {
     initWeb3Auth()
   }, [])
 
   useEffect(() => {
-    console.log("CFAddress:", CFAddress);
-console.log("walletProvider:", walletProvider);
-
-    if (CFAddress && walletProvider) {
-      fetchClinicDetails(walletProvider, CFAddress)
-      console.log("do")
-    }
-  }, [CFAddress, walletProvider])
+    fetchClinicDetails('0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550')
+  }, [])
 
   const handleEditClick = (field) => {
     switch (field) {
@@ -117,7 +111,7 @@ console.log("walletProvider:", walletProvider);
                 <input
                   type="text"
                   className="text-sm text-black px-2 py-1 border-b-2 w-full"
-                  value={newClinicName}
+                  value={clinicDetails.name}
                   onChange={(e) => setNewClinicName(e.target.value)}
                 />
                 <button
@@ -129,7 +123,7 @@ console.log("walletProvider:", walletProvider);
               </div>
             ) : (
               <div>
-                <h5 className="mt-2 text-sm text-black">{clinicName}</h5>
+                <h5 className="mt-2 text-sm text-black">{clinicDetails.name}</h5>
                 <div className="border border-gray-300 mt-2"></div>
               </div>
             )}
@@ -148,7 +142,7 @@ console.log("walletProvider:", walletProvider);
                 <input
                   type="text"
                   className="text-sm text-black px-2 py-1 border-b-2 w-full"
-                  value={newEmail}
+                  value={clinicDetails.keyvalues.email}
                   onChange={(e) => setNewEmail(e.target.value)}
                 />
                 <button
@@ -160,7 +154,7 @@ console.log("walletProvider:", walletProvider);
               </div>
             ) : (
               <div>
-                <h5 className="mt-2 text-sm text-black">{emailAddress}</h5>
+                <h5 className="mt-2 text-sm text-black">{clinicDetails.keyvalues.email}</h5>
                 <div className="border border-gray-300 mt-2"></div>
               </div>
             )}
@@ -179,7 +173,7 @@ console.log("walletProvider:", walletProvider);
                 <input
                   type="text"
                   className="text-sm text-black px-2 py-1 border-b-2 w-full"
-                  value={newPhone1}
+                  value={clinicDetails.keyvalues.firstPhone}
                   onChange={(e) => setNewPhone1(e.target.value)}
                 />
                 <button
@@ -191,7 +185,7 @@ console.log("walletProvider:", walletProvider);
               </div>
             ) : (
               <div>
-                <h5 className="mt-2 text-sm text-black">{phoneNumber1}</h5>
+                <h5 className="mt-2 text-sm text-black">{clinicDetails.keyvalues.firstPhone}</h5>
                 <div className="border border-gray-300 mt-2"></div>
               </div>
             )}
@@ -210,7 +204,7 @@ console.log("walletProvider:", walletProvider);
                 <input
                   type="text"
                   className="text-sm text-black px-2 py-1 border-b-2 w-full"
-                  value={newPhone2}
+                  value={clinicDetails.keyvalues.secondPhone}
                   onChange={(e) => setNewPhone2(e.target.value)}
                 />
                 <button
@@ -222,7 +216,7 @@ console.log("walletProvider:", walletProvider);
               </div>
             ) : (
               <div>
-                <h5 className="mt-2 text-sm text-black">{phoneNumber2}</h5>
+                <h5 className="mt-2 text-sm text-black">{clinicDetails.keyvalues.secondPhone}</h5>
                 <div className="border border-gray-300 mt-2"></div>
               </div>
             )}
@@ -241,7 +235,7 @@ console.log("walletProvider:", walletProvider);
                 <input
                   type="text"
                   className="text-sm text-black px-2 py-1 border-b-2 w-full"
-                  value={newAddress}
+                  value={clinicDetails.keyvalues.address1}
                   onChange={(e) => setNewAddress(e.target.value)}
                 />
                 <button
@@ -253,7 +247,7 @@ console.log("walletProvider:", walletProvider);
               </div>
             ) : (
               <div>
-                <h5 className="mt-2 text-sm text-black">{addressLine}</h5>
+                <h5 className="mt-2 text-sm text-black">{clinicDetails.keyvalues.address1}</h5>
                 <div className="border border-gray-300 mt-2"></div>
               </div>
             )}

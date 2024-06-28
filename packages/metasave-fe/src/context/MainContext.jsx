@@ -57,12 +57,27 @@ export const MainContextProvider = ({ children }) => {
       abi.MetaSave
     )
     console.log('fetchin user details for', CFAddress)
-    let IPFSid = 'QmcG553qsFk4cskCxMBukqEJSMv2oVm49kbC3Tc1zCAmz4'
+    let IPFSid = 'QmUtKWis5gMaFyK4H9B8psVXbZtnsY22iXFUwcQsXQqvmR'
 
     try {
+      const data = {
+        CF: '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f',
+        name: 'Alosh Denny',
+        email: 'aloshdhenny@gmail.com ',
+        age: 22,
+        gender: 'male',
+        phone: '9778393558',
+        address: 'Kochi',
+        contacts: [
+          { name: 'Friend1', phoneNumber: '9495090845' },
+          { name: 'Friend1', phoneNumber: '9400542359' },
+        ]
+      }
+      console.log(data)
+      setUserDetails(data)
+      
       const res = await axios.get(`${serverUrl}/user/${IPFSid}`)
-      console.log(res.data.data)
-      setUserDetails(res.data.data)
+      // setUserDetails(res.data.data)
     } catch (err) {
       console.log('invalid ipfsid', err)
     }
@@ -158,10 +173,10 @@ export const MainContextProvider = ({ children }) => {
     }
   }
 
-  const fetchClinicDetails = async (walletProvider, CFAddress) => {
-    const MetaSave = await walletProvider.getContract(addresses.MetaSave, abi.MetaSave)
+  const fetchClinicDetails = async (CFAddress) => {
+    // const MetaSave = await walletProvider.getContract(addresses.MetaSave, abi.MetaSave)
     console.log('fetchin clinic details for', CFAddress)
-    let IPFSid = 'QmWKoLtSe1V53Z2F1ggZJb361LQhf1S46C742mddLnG2Me'
+    let IPFSid = 'QmURC4AqiMdHxNYCfSwQdCypcgyBx9gPCqidSURjZBfV6Z'
 
     try {
         const res = await axios.get(`${serverUrl}/user/${IPFSid}`)
@@ -182,6 +197,7 @@ export const MainContextProvider = ({ children }) => {
         fallDetails,
         fallPopup,
         devices,
+        clinicDetails,
         setDevices,
         setFallPopup,
         setFallDetails,

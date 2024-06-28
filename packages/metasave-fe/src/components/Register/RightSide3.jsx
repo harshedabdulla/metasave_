@@ -34,7 +34,7 @@ const RightSide3 = ({ onPrev }) => {
       disease,
       duration
     }
-
+ 
     // const data = {
     //   CF: CFAddress,
     //   name: 'Abhinav C V',

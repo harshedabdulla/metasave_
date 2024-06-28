@@ -68,7 +68,7 @@ const AA = async(PRIV_KEY) => {
             })
         )
 
-        const CFaddress = await AAProvider.getAddress()
+        // const CFaddress = await AAProvider.getAddress()
 
         AAProvider.withAlchemyGasManager({
             policyId: process.env.GAS_MANAGER_POLICY_ID,

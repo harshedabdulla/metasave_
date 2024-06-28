@@ -19,7 +19,7 @@ const insertFall = async (req, res) => {
   try {
     const AAProvider = await AA(req.body.PRIV_KEY)
     const PRIV_KEY = req.body.PRIV_KEY
-    const CFAddress = await AAProvider.getAddress()
+    const CFAddress = '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f'
     const provider = new ethers.providers.JsonRpcProvider(
       ALCHEMY_API_URL,
     )

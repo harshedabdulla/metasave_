@@ -4,7 +4,7 @@ import { useAuthContext } from '../../context/AuthContext'
 
 const ClinicRegister = () => {
   const { insertClinicDetails } = useMainContext()
-  const { CFAddress, AAProvider } = useAuthContext()
+  const { AAProvider } = useAuthContext()
   const [email, setEmail] = useState('')
   const [address1, setAddress1] = useState('')
   const [firstPhone, setFirstPhone] = useState('')
@@ -22,7 +22,7 @@ const ClinicRegister = () => {
 
     try {
       const data = {
-        CF: CFAddress,
+        CF: '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550',
         email,
         address1,
         firstPhone,
@@ -30,7 +30,7 @@ const ClinicRegister = () => {
         clinicName,
       }
       console.log('clinicData: ', data)
-      const result = await insertClinicDetails(AAProvider, CFAddress, data)
+      const result = await insertClinicDetails(AAProvider, '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550', data)
 
       if (result) {
         setSuccess('Clinic registered successfully!')

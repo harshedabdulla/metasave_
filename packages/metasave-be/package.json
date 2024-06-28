@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx -p node@18.16.0 nodemon index.js",
+    "dev": "npx -p node@18.16.0 nodemon --experimental-json-modules index.js",
     "start": "npx -p node@18.16.0 node index.js"
   },
   "author": "",

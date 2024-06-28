@@ -9,13 +9,20 @@ import Bell from '../../assets/bell.png'
 import Statistics from '../../assets/statistics.png'
 import Stethescope from '../../assets/stethoscope.png'
 import { Link } from 'react-router-dom'
+import { useAuthContext } from '../../context/AuthContext'
 
 const ClinicDash = () => {
   const [investmentAmount, setInvestmentAmount] = useState(1000)
 
+  const { initWeb3Auth } = useAuthContext()
+
   const handleSliderChange = (event) => {
     setInvestmentAmount(event.target.value)
   }
+
+  React.useEffect(() => {
+    initWeb3Auth()
+  }, [])
 
   return (
     <div className="px-5 py-4">

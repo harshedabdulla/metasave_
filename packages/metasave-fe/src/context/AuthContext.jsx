@@ -21,6 +21,15 @@ import keccak256 from 'keccak256'
 
 const AuthContext = React.createContext()
 
+// abhinav_priv = 220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d
+// alosh_priv = 232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4
+
+// abhinav_cf = 0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550
+// alosh_cf = 0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f
+
+const user_type = localStorage.getItem('userType')
+
+
 const sepolia = /*#__PURE__*/ defineChain({
   id: 11_155_111,
   name: 'Sepolia',
@@ -115,8 +124,7 @@ export const AuthContextProvider = ({ children }) => {
   const verifyProof = async (walletAddress, walletProvider, type) => {
     try {
       // const priv_key = await walletProvider.getPrivateKey()
-      const priv_key =
-        '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
+      const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
       const CF = await getCFAddress(priv_key)
 
       console.log('CFADdress: ', CF)
@@ -128,8 +136,7 @@ export const AuthContextProvider = ({ children }) => {
       }
 
       // const privateKey = await walletProvider.getPrivateKey()
-      const privateKey =
-        '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
+      const privateKey = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
       const ZKProof = await walletProvider.getContract(
         addresses.ZKProof,
         abi.ZKProof
@@ -218,8 +225,7 @@ export const AuthContextProvider = ({ children }) => {
     const walletProvider = getWalletProvider(web3authProvider)
     const walletAddress = await walletProvider.getAddress()
     // const priv_key = await walletProvider.getPrivateKey()
-    const priv_key =
-      '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
+    const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
     console.log('priv_key', priv_key)
     setWalletProvider(walletProvider)
     setWalletAddress(walletAddress)
@@ -280,11 +286,11 @@ export const AuthContextProvider = ({ children }) => {
       policyId: GAS_MANAGER_POLICY_ID,
     })
 
-    let CFAddress = '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f'
-    // let CFAddress2 = ''
+    // let CFAddress = ''
+    let CFAddress = user_type == 'user' ? '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f' : '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550'
+
     try {
-      // let CFAddress2 = await AAProvider.getAddress()
-      CFAddress = '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f'
+      // CFAddress = await AAProvider.getAddress()
     } catch (err) {
       console.log('Error while trying to fetch CFAddress, fetching again')
     }
@@ -312,8 +318,7 @@ export const AuthContextProvider = ({ children }) => {
       const walletProvider = getWalletProvider(web3AuthProvider)
       const walletAddress = await walletProvider.getAddress()
       // const priv_key = await walletProvider.getPrivateKey()
-      const priv_key =
-        '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
+      const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
       console.log('priv_key', priv_key)
 
       setPrivKey(priv_key)

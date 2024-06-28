@@ -45,7 +45,7 @@ const verifyFallTrigger = async(req, res, next) => {
     const AAProvider = await AA(PRIV_KEY)
   
     const k_deviceId = `0x${keccak256(deviceId).toString('hex')}`
-    const CFAddress = await AAProvider.getAddress()
+    const CFAddress = '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f'
   
     console.log('CFAddress: ', CFAddress)
   
