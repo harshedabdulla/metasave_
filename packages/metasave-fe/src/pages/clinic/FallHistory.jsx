@@ -5,7 +5,7 @@ import { useAuthContext } from '../../context/AuthContext'
  
 const FallHistory = () => {
     const { CFAddress, walletProvider } = useAuthContext()
-    const {fetchFallDetails} = useMainContext()
+    const {fetchFallDetails, fetchUserDetails} = useMainContext()
     React.useEffect(() => {
     if (CFAddress && walletProvider) {
       fetchUserDetails(walletProvider, CFAddress)
