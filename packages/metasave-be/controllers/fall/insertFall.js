@@ -49,16 +49,20 @@ const insertFall = async (req, res) => {
 
     console.log('ipfs id:', ipfsid)
 
+    const phones = [
+      { name: "abhinav", phoneNumber: "+919778393558" }
+    ]
+
     const details = await axios.get(`${PINATA_BASE_URL}/ipfs/${ipfsid}`)
 
     console.log('details:', details.data)
     console.log('phones:', details.data.phone)
+    console.log('phones:', phones)
+
     const falldetails = JSON.parse(req.body.PREDICTION_DATA)
 
-    for (let i = 0; i < details.data.contacts.length; i++) {
-      let ph = details.data.contacts[i].phoneNumber
-        .replace(' ', '')
-        .replace('+', '')
+    for (let i = 0; i < phones.length; i++) {
+      let ph = phones[i].phoneNumber.replace(' ', '').replace('+', '')
       const res = sendMessage(
         `${PINATA_BASE_URL}/ipfs/${imgIPFSid}`,
         details.data.name,
@@ -67,11 +71,10 @@ const insertFall = async (req, res) => {
         falldetails.date
       )
       if (!res) {
-        console.log('Error sending message to', details.data.phone[i])
+        console.log('Error sending message to', phones[i].phoneNumber)
       }
     }
     
-
     dataIPFSid = await uploadToIPFS(
       JSON.parse(req.body.PREDICTION_DATA),
       'json'
