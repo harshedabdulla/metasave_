@@ -50,6 +50,7 @@ const insertFall = async (req, res) => {
     console.log('ipfs id:', ipfsid)
 
     const details = await axios.get(`${PINATA_BASE_URL}/ipfs/${ipfsid}`)
+
     console.log('details:', details.data)
     console.log('phones:', details.data.phone)
     const falldetails = JSON.parse(req.body.PREDICTION_DATA)

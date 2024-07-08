@@ -60,7 +60,7 @@ function App() {
             <Route path="/user/dashboard" element={<Dashboard />} />
             <Route path="/user/dashboard/profile" element={<Profile />} />
             <Route path="/user/newclinic" element={<AddClinic />} />
-            <Route path="/user/newdevice" element={<AddDevice />} />
+            <Route path="/user/dashboard/newdevice" element={<AddDevice />} />
             <Route path="/user/firstclinic" element={<FirstClinic />} />
             <Route path="/user/firstdevice" element={<FirstDevice />} />
             <Route path="/user/myclinic" element={<MyClinic />} />
