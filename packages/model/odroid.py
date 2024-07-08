@@ -1,14 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from bleak import BleakClient, BleakError
-import threading
-import queue
-from datetime import datetime
-import asyncio
-import requests
 import json
-import cv2
-from io import BytesIO
 from dotenv import dotenv_values
 import firebase_admin
 from firebase_admin import credentials, db
@@ -52,8 +45,6 @@ ADDRESS = "E0:F7:BF:E9:2B:7C"
 SERVICE_UUID = "12345678-1234-5678-9abc-def012345678"
 CHAR_UUID = "12345678-1234-5678-9abc-def012345679"
 
-AUTH_KEY_CHAR_UUID = "12345678-1234-5678-9abc-def012345680"
-
 url = 'http://localhost:5000/api/fall'
 
 # Function to send the authentication key using BleakClient
@@ -67,7 +58,7 @@ async def send_authentication_key(address, auth_key):
                 print("Already connected to the Arduino Nano BLE Sense Lite.")
 
             # Check if the key already exists
-            existing_key_bytes = await client.read_gatt_char(AUTH_KEY_CHAR_UUID)
+            existing_key_bytes = await client.read_gatt_char(CHAR_UUID)
             existing_key = existing_key_bytes.decode()
             if existing_key == auth_key:
                 print(f"The authentication key '{auth_key}' already exists.")

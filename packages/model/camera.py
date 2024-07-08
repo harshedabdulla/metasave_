@@ -15,9 +15,11 @@ import threading
 import queue
 import asyncio
 from bleak import BleakClient
+import bleak
 import firebase_admin
 from firebase_admin import credentials, db
 from dotenv import dotenv_values
+import struct
 
 env_vars = dotenv_values()
 
@@ -47,30 +49,45 @@ firebase_admin.initialize_app(cred, {
 
 fall_ref = db.reference('/fall')
 
-q = queue.Queue()
-
 address = "E0:F7:BF:E9:2B:7C"
 SERVICE_UUID = "12345678-1234-5678-9abc-def012345678"
 CHAR_UUID = "12345678-1234-5678-9abc-def012345679"
 
+q = queue.Queue()
 accelerometer_queue = queue.Queue()
 stop_ble_reading_event = asyncio.Event()
 
+async def find_bluetooth_device(target_address):
+    devices = await bleak.BleakScanner.discover()
+    for device in devices:
+        if device.address == target_address:
+            return device.address
+    return None
+
+loop = asyncio.get_event_loop()
+
+device_address = loop.run_until_complete(find_bluetooth_device(address))
+
+async def read_characteristic(client, char_uuid):
+    char_value = await client.read_gatt_char(char_uuid)
+    return char_value
+
+fall_detected = False
+
 async def read_characteristics(address, stop_event):
     async with BleakClient(address) as client:
-        fall_detected = False
         while not stop_event.is_set():
             try:
-                char_values = await client.read_gatt_char(CHAR_UUID)
-                int_value = int(char_values[0])
-                if (int_value == 49):
-                    print("Fallen")
+                char_values = await asyncio.gather(
+                    read_characteristic(client, CHAR_UUID)
+                )
+                value = struct.unpack('<i', char_values[0])[0]
+                if (value == 1):
+                    print("Wearable fall detected!")
                     fall_detected = True
-                    accelerometer_queue.put(fall_detected)
-                elif fall_detected and int_value != 49:
-                    fall_detected = False
-                    accelerometer_queue.put(fall_detected)
-                # accelerometer_queue.put(fall_detected)
+                fall_detected = False
+                print(fall_detected)
+                accelerometer_queue.put(fall_detected)
             except Exception as e:
                 print(f"Error: {e}")
             await asyncio.sleep(0.1)
@@ -80,8 +97,12 @@ def read_accel_data(address):
     asyncio.set_event_loop(loop)
     loop.run_until_complete(read_characteristics(address, stop_ble_reading_event))
 
-accelerometer_thread = threading.Thread(target=read_accel_data, args=(address,))
-accelerometer_thread.start()
+if device_address:
+    print(f"Bluetooth device found at {device_address}")
+    accelerometer_thread = threading.Thread(target=read_accel_data, args=(device_address,))
+    accelerometer_thread.start()
+else:
+    print("Bluetooth device not found")
 
 env_vars = dotenv_values()
 
@@ -96,7 +117,7 @@ model = weights['model']
 model = model.half().to(device)
 _ = model.eval()
 
-video_path = "packages/model/fall2.mp4"
+video_path = "packages/model/fall.mp4"
 cap = cv2.VideoCapture(video_path)
 
 if (cap.isOpened() == False):
@@ -112,19 +133,24 @@ fallen = False
 sent = False
 last_sent_time = None
 
+stop_request_event = threading.Event()
+
 def post_request():
     global last_sent_time
     now = datetime.now()
-    while True:
+    while not stop_request_event.is_set():
         item = q.get()
         if item is None:
             break
 
         if last_sent_time is None or (now - last_sent_time >= timedelta(seconds=30)):
             prediction_data, buffer = item
-            accelerometer_data = accelerometer_queue.get()
-            prediction_data['accelerometer_data'] = accelerometer_data
-            prediction_data_json = json.dumps(prediction_data)
+            if accelerometer_queue.qsize() > 0:
+                accelerometer_data = accelerometer_queue.get()
+                prediction_data['accelerometer_data'] = accelerometer_data
+                prediction_data_json = json.dumps(prediction_data)
+            else:
+                prediction_data_json = json.dumps(prediction_data)
 
             in_memory_file = BytesIO(buffer)
             files = {'file': ('current_frame.jpg', in_memory_file, 'image/jpeg')}
@@ -148,6 +174,8 @@ def post_request():
                 print("Error:", response.status_code)
 
         q.task_done()
+
+    q.task_done()
 
 request_thread = threading.Thread(target=post_request)
 request_thread.start()
@@ -195,6 +223,7 @@ while(cap.isOpened):
             
             if left_shoulder_y > left_foot_y - len_factor and left_body_y > left_foot_y - (len_factor / 2) and left_shoulder_y > left_body_y - (len_factor / 2):
               fallen = True
+              print("Camera has detected a fall!")
               if fallen and not sent:
                 now = datetime.now()
                 timestamp = now.strftime('%H:%M:%S')
@@ -227,7 +256,10 @@ cap.release()
 cv2.destroyAllWindows()
 
 stop_ble_reading_event.set()
-accelerometer_thread.join()
-
+if device_address:
+    accelerometer_thread.join()
+    stop_request_event.set()
+else:
+    stop_request_event.set()
 q.put(None)
 request_thread.join()
