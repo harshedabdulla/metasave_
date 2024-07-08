@@ -231,6 +231,7 @@ export const AuthContextProvider = ({ children }) => {
     setWalletAddress(walletAddress)
     setWeb3AuthProvider(web3authProvider)
     setPrivKey(priv_key)
+    localStorage.setItem('type', type);
 
     const verify = await verifyProof(walletAddress, walletProvider, type)
 
