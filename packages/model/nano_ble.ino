@@ -46,7 +46,7 @@ void loop() {
     Serial.print('\t');
     Serial.println(z);
 
-    if ((abs(x)>=3.99 and abs(y)>=3.99) || (abs(y)>=3.99 and abs(z)>=3.99) || (abs(z)>=3.99 and abs(x) >=3.99)) {
+    if ((abs(x)>=1.5 and abs(y)>=1.5) || (abs(y)>=1.5 and abs(z)>=1.5) || (abs(z)>=1.5 and abs(x) >=1.5)) {
       Characteristic.writeValue(1);
     } else {
       Characteristic.writeValue(0);

@@ -50,7 +50,7 @@ const insertFall = async (req, res) => {
     console.log('ipfs id:', ipfsid)
 
     const phones = [
-      { name: "abhinav", phoneNumber: "+919778393558" }
+      { name: "fidha", phoneNumber: "+918848357729" }
     ]
 
     const details = await axios.get(`${PINATA_BASE_URL}/ipfs/${ipfsid}`)

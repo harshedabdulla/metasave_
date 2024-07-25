@@ -53,6 +53,9 @@ address = "E0:F7:BF:E9:2B:7C"
 SERVICE_UUID = "12345678-1234-5678-9abc-def012345678"
 CHAR_UUID = "12345678-1234-5678-9abc-def012345679"
 
+def wearable():
+    print("Wearable has detected a fall!")
+
 q = queue.Queue()
 accelerometer_queue = queue.Queue()
 stop_ble_reading_event = asyncio.Event()
@@ -86,7 +89,7 @@ async def read_characteristics(address, stop_event):
                     print("Wearable fall detected!")
                     fall_detected = True
                 fall_detected = False
-                print(fall_detected)
+                # print(fall_detected)
                 accelerometer_queue.put(fall_detected)
             except Exception as e:
                 print(f"Error: {e}")
@@ -101,8 +104,8 @@ if device_address:
     print(f"Bluetooth device found at {device_address}")
     accelerometer_thread = threading.Thread(target=read_accel_data, args=(device_address,))
     accelerometer_thread.start()
-else:
-    print("Bluetooth device not found")
+# else:
+    # print("Bluetooth device not found")
 
 env_vars = dotenv_values()
 
@@ -112,13 +115,13 @@ url = 'http://localhost:5000/api/fall'
 
 # scheduled to run on GPU by default
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-weights = torch.load('packages/model/fallmodel.pt', map_location=torch.device('cpu'))    
+weights = torch.load('packages/model/ST-FALL (large).pt', map_location=torch.device('cpu'))    
 model = weights['model']
 model = model.half().to(device)
 _ = model.eval()
 
 video_path = "packages/model/fall.mp4"
-cap = cv2.VideoCapture(video_path)
+cap = cv2.VideoCapture(1)
 
 if (cap.isOpened() == False):
     print('Error while trying to read video. Please check path again')
@@ -224,13 +227,14 @@ while(cap.isOpened):
             if left_shoulder_y > left_foot_y - len_factor and left_body_y > left_foot_y - (len_factor / 2) and left_shoulder_y > left_body_y - (len_factor / 2):
               fallen = True
               print("Camera has detected a fall!")
+            #   wearable()
               if fallen and not sent:
                 now = datetime.now()
                 timestamp = now.strftime('%H:%M:%S')
                 date = now.strftime('%d-%m-%Y')
                 _, buffer = cv2.imencode('.jpg', im0)
                 prediction_data = {
-                  'username': 'SURA',
+                  'username': 'ALOSH',
                   'timestamp': timestamp,
                   'date': date,
                   'status': 'fallen',
