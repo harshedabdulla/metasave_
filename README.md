@@ -99,7 +99,7 @@ npm dev-odroid
 
 ### Install External Libraries
 
-**Install dependencies**:
+- **Install dependencies**:
     ```bash
     pip install -r requirements.txt
     ```
