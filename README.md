@@ -54,6 +54,56 @@ npm dev-camera
 npm dev-odroid
 ```
 
+# Project Setup Guide
+
+## Prerequisites
+
+### For Both Windows and Linux
+
+1. **Python**: 
+   - Ensure you have Python installed. You can download it from [Python's official website](https://www.python.org/downloads/).
+
+2. **Pip**: 
+   - Pip should be installed with Python, but you can ensure it's up-to-date by running the following command:
+     ```bash
+     python -m ensurepip --upgrade
+     ```
+
+3. **CUDA (for GPU users)**:
+   - If you have an Nvidia GPU and want to use CUDA, you need:
+     - A CUDA-capable GPU
+     - A supported version of Linux/Windows with a gcc compiler and toolchain
+     - NVIDIA CUDA Toolkit: [CUDA Downloads](https://developer.nvidia.com/cuda-downloads)
+   - Check your GPU driver version with:
+     ```bash
+     nvidia-smi
+     ```
+   - Install or update your Nvidia drivers if necessary from: [Nvidia Drivers](https://www.nvidia.com/en-us/drivers/).
+
+### Install PyTorch
+
+- **CPU Only**:
+  ```bash
+  conda install pytorch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 cpuonly -c pytorch
+  ```
+- **GPU and CPU**:
+  
+  **CUDA 11.8**  
+  ```bash
+  conda install pytorch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 pytorch-cuda=11.8 -c pytorch -c nvidia
+  ```
+  **CUDA 12.1**  
+  ```bash
+  conda install pytorch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 pytorch-cuda=12.1 -c pytorch -c nvidia
+  ```
+
+### Install External Libraries
+
+**Install dependencies**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
 
 ## Purpose of each module:
 
