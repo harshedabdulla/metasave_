@@ -8,7 +8,6 @@ const PINATA_API_KEY = process.env.PINATA_API_KEY
 
 const fetchDetails = async(req, res) => {
     try {
-        // const ipfsId = "QmWcpT1SrrFGdKiovFcPs2NiYh2LvCxRNqZWJ8AY7CmGwr"
         const ipfsId = req.params.cid;
         console.log("CID:",ipfsId)
         let data
@@ -18,13 +17,14 @@ const fetchDetails = async(req, res) => {
                     'x-pinata-gateway-token': PINATA_API_KEY
                 }
             })
+            console.log(response.data)
             data = response.data
         }catch(e){
-            console.log(e)
+            console.log('Some error occurred while trying to fetch data from IPFS')
         }
         res.json({data})
     } catch (error) {
-        console.log(error)
+        console.log('Some error occurred while trying to fetch data from IPFS')
     }
 }
 

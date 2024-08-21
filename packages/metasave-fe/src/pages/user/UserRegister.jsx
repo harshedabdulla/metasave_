@@ -3,11 +3,12 @@ import { useAuthContext } from '../../context/AuthContext'
 import { useMainContext } from '../../context/MainContext'
 
 const UserRegister = () => {
-  const { AAProvider } = useAuthContext()
+  const { AAProvider, CFAddress } = useAuthContext()
   const { insertUserDetails } = useMainContext()
 
   const [step, setStep] = useState(1)
   const [phone, setPhone] = useState('')
+  const [email, setEmail] = useState('')
   const [address1, setAddress1] = useState('')
   const [age, setAge] = useState('')
   const [gender, setGender] = useState('male')
@@ -24,9 +25,9 @@ const UserRegister = () => {
     } else {
       // Final submission logic here, e.g., sending data to an API
       const data = {
-        CF: '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f',
+        CF: CFAddress,
         name,
-        email: 'aloshdhenny@gmail.com ',
+        email,
         age,
         gender,
         phone,
@@ -39,7 +40,7 @@ const UserRegister = () => {
 
       console.log(data)
 
-      const res = await insertUserDetails(AAProvider, '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f', data)
+      const res = await insertUserDetails(AAProvider, CFAddress, data)
       if(res){
         window.location.replace(`/${localStorage.getItem('userType')}/dashboard`)
       }
@@ -78,6 +79,15 @@ const UserRegister = () => {
                   placeholder="Name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                />
+                <input
+                  type="email"
+                  required
+                  style={{ borderBottom: '.5px solid black' }}
+                  className="appearance-none rounded-none relative block w-full py-2 border-0 border-black placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm mt-4"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
                   type="tel"

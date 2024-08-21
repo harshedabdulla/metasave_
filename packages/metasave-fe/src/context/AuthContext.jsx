@@ -8,12 +8,13 @@ import axios from 'axios'
 import { getWalletProvider } from '../helpers/walletProvider.js'
 import { addresses } from '../constants/addresses.js'
 import { abi } from '../abi/index.js'
-import {
-  LightSmartContractAccount,
-  getDefaultLightAccountFactoryAddress,
-} from '@alchemy/aa-accounts'
-import { AlchemyProvider } from '@alchemy/aa-alchemy'
+// import {
+//   LightSmartContractAccount,
+//   getDefaultLightAccountFactoryAddress,
+// } from '@alchemy/aa-accounts'
+// import { AlchemyProvider } from '@alchemy/aa-alchemy'
 import { LocalAccountSigner } from '@alchemy/aa-core'
+import { createModularAccountAlchemyClient } from "@alchemy/aa-alchemy";
 import { defineChain } from 'viem'
 // import { sepolia } from "viem/chains";
 import { useMainContext } from './MainContext.jsx'
@@ -26,6 +27,7 @@ const AuthContext = React.createContext()
 
 // abhinav_cf = 0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550
 // alosh_cf = 0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f
+
 
 const user_type = localStorage.getItem('userType')
 
@@ -123,8 +125,8 @@ export const AuthContextProvider = ({ children }) => {
 
   const verifyProof = async (walletAddress, walletProvider, type) => {
     try {
-      // const priv_key = await walletProvider.getPrivateKey()
-      const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
+      const priv_key = await walletProvider.getPrivateKey()
+      // const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
       const CF = await getCFAddress(priv_key)
 
       console.log('CFADdress: ', CF)
@@ -135,8 +137,8 @@ export const AuthContextProvider = ({ children }) => {
         newUser: false,
       }
 
-      // const privateKey = await walletProvider.getPrivateKey()
-      const privateKey = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
+      const privateKey = await walletProvider.getPrivateKey()
+      // const privateKey = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
       const ZKProof = await walletProvider.getContract(
         addresses.ZKProof,
         abi.ZKProof
@@ -224,8 +226,8 @@ export const AuthContextProvider = ({ children }) => {
     console.log('web3authprovider: ', web3authProvider)
     const walletProvider = getWalletProvider(web3authProvider)
     const walletAddress = await walletProvider.getAddress()
-    // const priv_key = await walletProvider.getPrivateKey()
-    const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
+    const priv_key = await walletProvider.getPrivateKey()
+    // const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
     console.log('priv_key', priv_key)
     setWalletProvider(walletProvider)
     setWalletAddress(walletAddress)
@@ -235,9 +237,11 @@ export const AuthContextProvider = ({ children }) => {
 
     const verify = await verifyProof(walletAddress, walletProvider, type)
 
+    console.log(verify)
+
     if (verify.proceed == true) {
       if (verify.newUser == true) {
-        window.location.replace(`/${localStorage.getItem('userType')}/dashboard`)
+        window.location.replace(`/${localStorage.getItem('userType')}/register`)
       } else {
         setLoggedIn(web3auth?.status === 'connected' ? true : false)
         const CF = getCFAddress(priv_key)
@@ -245,11 +249,15 @@ export const AuthContextProvider = ({ children }) => {
           addresses.MetaSave,
           abi.MetaSave
         )
-        const IPFSid = await MetaSave.getIPFSFileName(CF)
-        if (!IPFSid) {
-          window.location.replace(`/${localStorage.getItem('userType')}/register`)
-        } else {
-          window.location.replace(`/${localStorage.getItem('userType')}/dashboard`)
+        let IPFSid = ''
+        try{
+          IPFSid = await MetaSave.getIPFSFileName(CF)
+        }catch(err){
+          if (!IPFSid) {
+            window.location.replace(`/${localStorage.getItem('userType')}/register`)
+          } else {
+            window.location.replace(`/${localStorage.getItem('userType')}/dashboard`)
+          }
         }
       }
     } else if (verify.proceed == false) {
@@ -268,29 +276,41 @@ export const AuthContextProvider = ({ children }) => {
 
     const owner = LocalAccountSigner.privateKeyToAccountSigner(PRIVATE_KEY)
 
-    const AAProvider = new AlchemyProvider({
+    const AAProvider = await createModularAccountAlchemyClient({
       apiKey: ALCHEMY_API_KEY,
       chain,
-      entryPointAddress: ENTRY_POINT_ADDRESS,
-    }).connect(
-      (rpcClient) =>
-        new LightSmartContractAccount({
-          rpcClient,
-          owner,
-          chain,
-          entryPointAddress: ENTRY_POINT_ADDRESS,
-          factoryAddress: getDefaultLightAccountFactoryAddress(chain),
-        })
-    )
+      signer: owner,
+      gasManagerConfig: {
+        policyId: GAS_MANAGER_POLICY_ID,
+      },
+    });
+  
+    console.log(AAProvider.getAddress());
 
-    AAProvider.withAlchemyGasManager({
-      policyId: GAS_MANAGER_POLICY_ID,
-    })
+    // const AAProvider = new AlchemyProvider({
+    //   apiKey: ALCHEMY_API_KEY,
+    //   chain,
+    //   entryPointAddress: ENTRY_POINT_ADDRESS,
+    // }).connect(
+    //   (rpcClient) =>
+    //     new LightSmartContractAccount({
+    //       rpcClient,
+    //       owner,
+    //       chain,
+    //       entryPointAddress: ENTRY_POINT_ADDRESS,
+    //       factoryAddress: getDefaultLightAccountFactoryAddress(chain),
+    //     })
+    // )
 
-    // let CFAddress = ''
-    let CFAddress = user_type == 'user' ? '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f' : '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550'
+    // AAProvider.withAlchemyGasManager({
+    //   policyId: GAS_MANAGER_POLICY_ID,
+    // })
+
+    let CFAddress = ''
+    // let CFAddress = user_type == 'user' ? '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f' : '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550'
 
     try {
+      CFAddress = AAProvider.getAddress()
       // CFAddress = await AAProvider.getAddress()
     } catch (err) {
       console.log('Error while trying to fetch CFAddress, fetching again')
@@ -318,8 +338,8 @@ export const AuthContextProvider = ({ children }) => {
       const web3AuthProvider = web3auth.provider
       const walletProvider = getWalletProvider(web3AuthProvider)
       const walletAddress = await walletProvider.getAddress()
-      // const priv_key = await walletProvider.getPrivateKey()
-      const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
+      const priv_key = await walletProvider.getPrivateKey()
+      // const priv_key = user_type == 'user' ? '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4' : '220122697681ad9a47dfbbbe44ebf54eb0a091e88257fac94454d316bac07e3d'
       console.log('priv_key', priv_key)
 
       setPrivKey(priv_key)

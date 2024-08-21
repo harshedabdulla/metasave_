@@ -80,6 +80,14 @@ npm dev-odroid
      ```
    - Install or update your Nvidia drivers if necessary from: [Nvidia Drivers](https://www.nvidia.com/en-us/drivers/).
 
+  3. **NODE JS**:
+    - Use Node v20.16.0 throughout the project
+    ```bash
+    nvm install 20.16.0
+    nvm use 20.16.0
+    node -v
+    ```
+
 ### Install PyTorch
 
 - **CPU Only**:
@@ -102,6 +110,10 @@ npm dev-odroid
 - **Install dependencies**:
     ```bash
     pip install -r packages/model/requirements.txt
+    ```
+
+    ```bash
+    npm install
     ```
 
 ## Purpose of each module:

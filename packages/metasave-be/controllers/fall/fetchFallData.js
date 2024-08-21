@@ -31,13 +31,15 @@ const fetchFallData = async(req, res) => {
     try {
         const result1 = [];
         try {
-            const CFAddress = '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f'
+            // const CFAddress = '0xa09C36E28F91Bab16A6A721c8Bd32888eF541b6f'
+            const CFAddress = req.params.cfaddress
             console.log(ALCHEMY_API_URL)
             const provider = new ethers.providers.JsonRpcProvider(
               ALCHEMY_API_URL
             )
             const contractAddress = addresses.MetaSave
-            const privateKey = '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
+            // const privateKey = '232f51a0bc36bcc2fdd76b7bdc25da572cd75621dc1d91feed35d298fc13c3d4'
+            const privateKey = req.params.privatekey
             const wallet = new ethers.Wallet(`0x${privateKey}`, provider)
             const contract = new ethers.Contract(contractAddress, abi.MetaSave, wallet)
             const fallIpfsids = await contract.getFallData(CFAddress)
@@ -59,12 +61,11 @@ const fetchFallData = async(req, res) => {
               }
             }
         }catch(err){
-            console.log(err)
+            console.log('No fall data for this user')
         }
-        console.log(result1)
         res.json({result: result1})
     } catch (error) {
-        console.log(error)
+        console.log('Some error occurred while trying to fetch fall data')
     }
 }
 

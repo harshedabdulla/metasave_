@@ -13,14 +13,19 @@ const insertDetails = async (req, res) => {
 
     // Create pinataMetadata object
     const pinataMetadata = {
-      name: data.clinicName,
       keyvalues: {
         CF: data.CF,
+        name: data.name,
         email: data.email,
-        address1: data.address1,
-        firstPhone: data.firstPhone,
-        secondPhone: data.secondPhone,
+        age: data.age,
+        gender: data.gender,
+        phone: data.phone,
+        address: data.address
       },
+      contacts: [
+        { name: data.contacts[0].name, phoneNumber: data.contacts[0].phoneNumber },
+        { name: data.contacts[1].name, phoneNumber: data.contacts[1].phoneNumber }
+      ]
     };
 
     // Convert pinataMetadata to JSON

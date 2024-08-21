@@ -34,6 +34,6 @@ const upload = multer({ storage: storage })
 const router = express.Router()
 
 router.post('/fall', upload.single('file'), insertFall)
-router.get('/falldata', fetchFallData)
+router.get('/falldata/:cfaddress/:privatekey', fetchFallData)
 
 export default router

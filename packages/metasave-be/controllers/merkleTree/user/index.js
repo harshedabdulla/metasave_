@@ -65,7 +65,7 @@ const userMerkleTree = async (req, res) => {
             newUser = true
             
         }else{
-            console.log('Checking Merkle Tree...')
+            console.log('Checking Merkle Tree...', treeCID)
             treeJSON = await fetchMT(treeCID)
 
             console.log(treeJSON)
