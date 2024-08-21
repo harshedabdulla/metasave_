@@ -86,7 +86,7 @@ npm dev-odroid
   ```bash
   conda install pytorch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 cpuonly -c pytorch
   ```
-- **GPU and CPU**:
+- **GPU and CPU (choose from either versions which are compatible with your current GPU model)**:
   
   **CUDA 11.8**  
   ```bash
@@ -103,7 +103,6 @@ npm dev-odroid
     ```bash
     pip install -r requirements.txt
     ```
-
 
 ## Purpose of each module:
 
