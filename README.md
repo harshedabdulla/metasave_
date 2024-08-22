@@ -134,7 +134,12 @@ npm dev-odroid
 
 The camera.py script is capable of execution even if the wearable device isn't connected. But if you would like to set it up, follow this procedure:
 
-- **Navigate to the     ```bash pip install -r packages/model/requirements.txt``` script
+- **Navigate to the ```packages/model/odroid.py``` script**
+- **Retrieve the MAC Address of the Wearable Device and add it to the ```ADDRESS``` field**
+- **Usually the ```SERVICE_UUID``` and the ```CHAR_UUID``` are default, but if making any changes (optional), you will have to update the same values in these fields in the ```packages/model/nano_ble.ino``` script**
+- **Push the updated script to the Arduino board**
+
+That's it, you're all set to go
 
 ## Purpose of each module:
 
