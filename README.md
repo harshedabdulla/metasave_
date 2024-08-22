@@ -118,13 +118,13 @@ npm dev-odroid
 
 ### Setting Up Camera Device
 
-Any USB port camera with a resolution of 1080*1920 or less should work. In the working directory, navigate to:
+- **Any USB port camera with a resolution of 1080*1920 or less should work. In the working directory, navigate to:**
     ```bash
     packages/model/camera.py
     ```
 
-Ensure that the following line in the script is as is:
-    ```bash
+- **Ensure that the following line in the script is as is:**
+   ```bash
     cap = cv2.VideoCapture(0)
     ```
 
