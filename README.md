@@ -83,9 +83,9 @@ npm dev-odroid
   3. **NODE JS**:
     - Use Node v20.16.0 throughout the project
      ```bash
-    nvm install 20.16.0
-    nvm use 20.16.0
-    node -v
+     nvm install 20.16.0
+     nvm use 20.16.0
+     node -v
      ```
 
 ### Install PyTorch
@@ -128,7 +128,7 @@ npm dev-odroid
     cap = cv2.VideoCapture(0)
     ```
 
-O is default for the system's native camera. You can set the value inside the VideoCapture function to other numbers. Other numbers represent peripherically connected cameras.
+0 is default for the system's native camera. You can set the value inside the VideoCapture function to other numbers, which represent additional peripherically connected cameras.
 
 ### Setting Up Wearable Device (optional)
 
