@@ -134,7 +134,7 @@ npm dev-odroid
 
 The camera.py script is capable of execution even if the wearable device isn't connected. But if you would like to set it up, follow this procedure:
 
-- 
+- **Navigate to the     ```bash pip install -r packages/model/requirements.txt``` script
 
 ## Purpose of each module:
 
