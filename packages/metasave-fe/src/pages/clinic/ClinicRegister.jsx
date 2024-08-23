@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import { useMainContext } from '../../context/MainContext'
 import { useAuthContext } from '../../context/AuthContext'
+import { type } from 'requests'
 
 const ClinicRegister = () => {
+  const { AAProvider, CFAddress } = useAuthContext()
   const { insertClinicDetails } = useMainContext()
-  const { AAProvider } = useAuthContext()
+
   const [email, setEmail] = useState('')
   const [address1, setAddress1] = useState('')
   const [firstPhone, setFirstPhone] = useState('')
@@ -22,7 +24,8 @@ const ClinicRegister = () => {
 
     try {
       const data = {
-        CF: '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550',
+        type: 'clinic',
+        CF: CFAddress,
         email,
         address1,
         firstPhone,
@@ -30,7 +33,7 @@ const ClinicRegister = () => {
         clinicName,
       }
       console.log('clinicData: ', data)
-      const result = await insertClinicDetails(AAProvider, '0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550', data)
+      const result = await insertClinicDetails(AAProvider, CFAddress, data)
 
       if (result) {
         setSuccess('Clinic registered successfully!')

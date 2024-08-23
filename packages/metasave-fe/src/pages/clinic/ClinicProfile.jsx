@@ -26,12 +26,17 @@ const ClinicProfile = () => {
   const { clinicDetails, fetchClinicDetails } = useMainContext();
 
   useEffect(() => {
-    initWeb3Auth();
-  }, []);
+    initWeb3Auth()
+  }, [])
 
   useEffect(() => {
-    fetchClinicDetails('0x0cBe46cDA9015E0fd8704249C2FCDAfbE2507550');
-  }, []);
+    if (CFAddress && walletProvider) {
+      fetchClinicDetails(walletProvider, CFAddress)
+    }
+  }, [
+    CFAddress,
+    walletProvider,
+  ])
 
   const handleEditClick = (field) => {
     switch (field) {
@@ -115,7 +120,7 @@ const ClinicProfile = () => {
                 <input
                   type="text"
                   className="text-sm text-black px-2 py-1 border-b-2 w-full"
-                  value={clinicDetails.name}
+                  value={clinicDetails.keyvalues.clinicName}
                   onChange={(e) => setNewClinicName(e.target.value)}
                 />
                 <button
@@ -127,7 +132,7 @@ const ClinicProfile = () => {
               </div>
             ) : (
               <div>
-                <h5 className="mt-2 text-sm text-black">{clinicDetails.name}</h5>
+                <h5 className="mt-2 text-sm text-black">{clinicDetails.keyvalues.clinicName}</h5>
                 <div className="border border-gray-300 mt-2"></div>
               </div>
             )}
@@ -146,7 +151,7 @@ const ClinicProfile = () => {
                 <input
                   type="text"
                   className="text-sm text-black px-2 py-1 border-b-2 w-full"
-                  value={clinicDetails.keyvalues.email}
+                  value={clinicDetails.keyvalues.email || 'clinic@gmail.com'}
                   onChange={(e) => setNewEmail(e.target.value)}
                 />
                 <button

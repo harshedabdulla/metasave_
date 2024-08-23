@@ -26,11 +26,13 @@ const AddDevice = () => {
         args: [CFAddress, newDevice.name, newDevice.id, newDevice.ip, newDevice.date],
       })
       const uo = await AAProvider.sendUserOperation({
-        target: addresses.MetaSave,
-        data: uoCallData,
+        uo: {
+          target: addresses.MetaSave,
+          data: uoCallData,
+        }
       });
   
-      const txHash = await AAProvider.waitForUserOperationTransaction(uo.hash)
+      const txHash = await AAProvider.waitForUserOperationTransaction(uo)
       if(txHash){
         console.log("TX HASH: ", txHash)
         window.location.replace('/dashboard')

@@ -25,6 +25,7 @@ const UserRegister = () => {
     } else {
       // Final submission logic here, e.g., sending data to an API
       const data = {
+        type: 'user',
         CF: CFAddress,
         name,
         email,

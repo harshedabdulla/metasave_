@@ -12,21 +12,36 @@ const insertDetails = async (req, res) => {
     const data = req.body.data;
 
     // Create pinataMetadata object
-    const pinataMetadata = {
-      keyvalues: {
-        CF: data.CF,
-        name: data.name,
-        email: data.email,
-        age: data.age,
-        gender: data.gender,
-        phone: data.phone,
-        address: data.address
-      },
-      contacts: [
-        { name: data.contacts[0].name, phoneNumber: data.contacts[0].phoneNumber },
-        { name: data.contacts[1].name, phoneNumber: data.contacts[1].phoneNumber }
-      ]
-    };
+    let pinataMetadata;
+    if (data.type === 'clinic') {
+      pinataMetadata = {
+        keyvalues: {
+          CF: data.CF,
+          name: data.name,
+          email: data.email,
+          address1: data.address1,
+          firstPhone: data.firstPhone,
+          secondPhone: data.secondPhone,
+          clinicName: data.clinicName
+        }
+      };
+    } else if (data.type === 'user') {
+      pinataMetadata = {
+        keyvalues: {
+          CF: data.CF,
+          name: data.name,
+          email: data.email,
+          age: data.age,
+          gender: data.gender,
+          phone: data.phone,
+          address: data.address
+        },
+        contacts: [
+          { name: data.contacts[0].name, phoneNumber: data.contacts[0].phoneNumber },
+          { name: data.contacts[1].name, phoneNumber: data.contacts[1].phoneNumber }
+        ]
+      };
+    }
 
     // Convert pinataMetadata to JSON
     const pinataMetadataJSON = JSON.stringify(pinataMetadata);

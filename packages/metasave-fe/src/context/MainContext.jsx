@@ -169,10 +169,12 @@ export const MainContextProvider = ({ children }) => {
         args: [CFAddress, IPFSid],
     })
     const uo = await AAProvider.sendUserOperation({
+      uo: {
         target: addresses.MetaSave,
         data: uoCallData,
+      }
     });
-    const txHash = await AAProvider.waitForUserOperationTransaction(uo.hash)
+    const txHash = await AAProvider.waitForUserOperationTransaction(uo)
     if (txHash) {
         console.log("TX HASH: ", txHash)
         return true
@@ -181,7 +183,7 @@ export const MainContextProvider = ({ children }) => {
     }
   }
 
-  const fetchClinicDetails = async (CFAddress) => {
+  const fetchClinicDetails = async (walletProvider, CFAddress) => {
     const MetaSave = await walletProvider.getContract(addresses.MetaSave, abi.MetaSave)
     console.log('fetchin clinic details for', CFAddress)
     // let IPFSid = 'QmURC4AqiMdHxNYCfSwQdCypcgyBx9gPCqidSURjZBfV6Z'
