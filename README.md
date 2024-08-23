@@ -82,11 +82,11 @@ npm dev-odroid
 
   3. **NODE JS**:
     - Use Node v20.16.0 throughout the project
-    ```bash
-    nvm install 20.16.0
-    nvm use 20.16.0
-    node -v
-    ```
+     ```bash
+     nvm install 20.16.0
+     nvm use 20.16.0
+     node -v
+     ```
 
 ### Install PyTorch
 
@@ -115,6 +115,31 @@ npm dev-odroid
     ```bash
     npm install
     ```
+
+### Setting Up Camera Device
+
+- **Any USB port camera with a resolution of 1080*1920 or less should work. In the working directory, navigate to:**
+    ```bash
+    packages/model/camera.py
+    ```
+
+- **Ensure that the following line in the script is as is:**
+   ```bash
+    cap = cv2.VideoCapture(0)
+    ```
+
+0 is default for the system's native camera. You can set the value inside the VideoCapture function to other numbers, which represent additional peripherically connected cameras.
+
+### Setting Up Wearable Device (optional)
+
+The camera.py script is capable of execution even if the wearable device isn't connected. But if you would like to set it up, follow this procedure:
+
+- **Navigate to the ```packages/model/odroid.py``` script**
+- **Retrieve the MAC Address of the Wearable Device and add it to the ```ADDRESS``` field**
+- **Usually the ```SERVICE_UUID``` and the ```CHAR_UUID``` are default, but if making any changes (optional), you will have to update the same values in these fields in the ```packages/model/nano_ble.ino``` script**
+- **Push the updated script to the Arduino board**
+
+That's it, you're all set to go
 
 ## Purpose of each module:
 
