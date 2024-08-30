@@ -1,16 +1,12 @@
-import {
-    LightSmartContractAccount,
-    getDefaultLightAccountFactoryAddress,
-  } from "@alchemy/aa-accounts";
-import { AlchemyProvider } from "@alchemy/aa-alchemy";
 import { LocalAccountSigner } from "@alchemy/aa-core";
+import { createModularAccountAlchemyClient } from "@alchemy/aa-alchemy";
 import { defineChain } from 'viem'
 // import { sepolia } from 'viem/chains'
 import dotenv from 'dotenv'
 dotenv.config();
 
 const ALCHEMY_API_KEY = process.env.ALCHEMY_API_KEY
-const ENTRY_POINT_ADDRESS = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
+// const ENTRY_POINT_ADDRESS = "0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789"
 
 const sepolia = /*#__PURE__*/ defineChain({
     id: 11_155_111,
@@ -53,25 +49,13 @@ const AA = async(PRIV_KEY) => {
 
         const owner = LocalAccountSigner.privateKeyToAccountSigner(PRIVATE_KEY);
 
-        const AAProvider = new AlchemyProvider({
-            apiKey: ALCHEMY_API_KEY,
-            chain,
-            entryPointAddress: ENTRY_POINT_ADDRESS,
-        }).connect(
-        (rpcClient) =>
-            new LightSmartContractAccount({
-                rpcClient,
-                owner,
-                chain,
-                entryPointAddress: ENTRY_POINT_ADDRESS,
-                factoryAddress: getDefaultLightAccountFactoryAddress(chain),
-            })
-        )
-
-        // const CFaddress = await AAProvider.getAddress()
-
-        AAProvider.withAlchemyGasManager({
+        const AAProvider = await createModularAccountAlchemyClient({
+          apiKey: ALCHEMY_API_KEY,
+          chain,
+          signer: owner,
+          gasManagerConfig: {
             policyId: process.env.GAS_MANAGER_POLICY_ID,
+          },
         });
 
         return AAProvider

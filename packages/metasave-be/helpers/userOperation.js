@@ -14,11 +14,13 @@ async function userOperation(abi, functionName, args, address, PRIV_KEY) {
     // console.log(PRIV_KEY, AAProvider.getAddress())
 
     const userOperation = await AAProvider.sendUserOperation({
-      target: address, 
-      data: callData,
+      uo: {
+        target: address, 
+        data: callData,
+      }
     });
 
-    const txHash = await AAProvider.waitForUserOperationTransaction(userOperation.hash);
+    const txHash = await AAProvider.waitForUserOperationTransaction(userOperation);
 
     console.log('transaction completed...', txHash)
 

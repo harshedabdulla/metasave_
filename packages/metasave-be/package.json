@@ -11,9 +11,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@alchemy/aa-accounts": "^2.4.0",
-    "@alchemy/aa-alchemy": "^2.4.0",
-    "@alchemy/aa-core": "^2.3.1",
+    "@alchemy/aa-accounts": "^3.19.0",
+    "@alchemy/aa-alchemy": "^3.19.0",
+    "@alchemy/aa-core": "^3.19.0",
     "@helia/dag-json": "^3.0.0",
     "@helia/json": "^3.0.0",
     "@helia/strings": "^3.0.0",
